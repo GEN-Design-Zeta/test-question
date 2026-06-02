@@ -78,12 +78,74 @@ svg{display:block}
 .nav-row{display:flex;align-items:center;height:74px;gap:40px}
 .logo{font-size:24px;font-weight:700;letter-spacing:-.5px;color:var(--white);display:flex;align-items:center}
 .logo .d{width:7px;height:7px;border-radius:50%;background:var(--lav);margin-left:3px;box-shadow:0 0 12px var(--lav)}
-.nav-links{display:flex;gap:30px}
-.nav-links a{font-size:14.5px;font-weight:500;color:var(--t2);transition:color .2s;position:relative}
-.nav-links a:hover{color:var(--white)}
-.nav-right{margin-left:auto;display:flex;align-items:center;gap:20px}
+.nav.mega-active{background:rgba(8,7,13,.82);backdrop-filter:blur(18px) saturate(150%);border-color:var(--line)}
+.nav-links{display:flex;gap:4px;align-items:center}
+.nav-trigger{display:inline-flex;align-items:center;gap:7px;font-family:inherit;font-size:14px;font-weight:500;color:var(--t2);background:none;border:none;cursor:pointer;padding:9px 13px;border-radius:9px;transition:color .2s,background .2s}
+.nav-trigger .chev{width:8px;height:8px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translate(-1px,-1px);opacity:.6;transition:transform .3s var(--ease),opacity .2s}
+.nav-trigger:hover{color:var(--white)}
+.nav-trigger.active{color:var(--white);background:var(--glass)}
+.nav-trigger.active .chev{transform:rotate(225deg) translate(-1px,-1px);opacity:1}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:18px}
 .nav-ghost{font-size:14.5px;font-weight:600;color:var(--t1);transition:color .2s}
 .nav-ghost:hover{color:var(--lav)}
+
+/* ── MEGA MENU ── */
+.mega{position:absolute;top:100%;left:0;right:0;opacity:0;visibility:hidden;transform:translateY(10px);transition:opacity .32s var(--ease),transform .32s var(--ease),visibility .32s}
+.mega.open{opacity:1;visibility:visible;transform:none}
+.mega-bg{background:rgba(11,10,18,.94);backdrop-filter:blur(24px) saturate(150%);border-top:1px solid var(--line);border-bottom:1px solid var(--line);box-shadow:0 50px 90px -34px rgba(0,0,0,.85),inset 0 1px 0 rgba(255,255,255,.04)}
+.mega-panel{display:none;padding:42px 0 46px}
+.mega-panel.show{display:block;animation:megaIn .38s var(--ease)}
+@keyframes megaIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.mega-inner{display:flex;gap:48px;align-items:flex-start}
+.mega-cols{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:36px}
+.mega-cols.cols-4{grid-template-columns:repeat(4,1fr)}
+.mega-cols.cols-2{grid-template-columns:repeat(2,1fr);max-width:560px}
+.mcol{min-width:0}
+.mcol-h{font-family:var(--fm);font-size:10.5px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--lav);margin-bottom:14px;padding-bottom:11px;border-bottom:1px solid var(--line)}
+.mitem{display:block;font-size:14px;color:var(--t2);padding:8px 0;transition:color .2s,transform .25s var(--ease)}
+.mitem:hover{color:var(--white);transform:translateX(5px)}
+.mlead{display:block;font-size:14px;font-weight:600;color:var(--t1);padding:8px 0 6px;transition:color .2s,transform .25s var(--ease)}
+.mlead:hover{color:var(--lav);transform:translateX(5px)}
+.mgroup{margin-bottom:14px}
+.msub{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--t3);padding:5px 0 5px 2px;transition:color .2s,transform .25s var(--ease)}
+.msub::before{content:'';width:9px;height:1px;background:var(--t4);flex-shrink:0}
+.msub:hover{color:var(--lav);transform:translateX(4px)}
+.msub:hover::before{background:var(--lav)}
+.mitem-rich{display:block;padding:11px 0;transition:transform .25s var(--ease)}
+.mitem-rich b{display:block;font-size:14px;font-weight:600;color:var(--t1);margin-bottom:3px;transition:color .2s}
+.mitem-rich span{display:block;font-size:12.5px;color:var(--t3);line-height:1.5}
+.mitem-rich:hover{transform:translateX(4px)}
+.mitem-rich:hover b{color:var(--lav)}
+.mega-feature{flex:0 0 264px;position:relative;display:block;padding:24px;border-radius:14px;overflow:hidden;background:linear-gradient(165deg,rgba(138,107,240,.18),rgba(255,255,255,.02));border:1px solid var(--line-2);transition:transform .35s var(--ease),box-shadow .35s}
+.mega-feature:hover{transform:translateY(-3px);box-shadow:0 24px 50px -28px var(--glow)}
+.mf-ic{width:42px;height:42px;border-radius:11px;display:grid;place-items:center;background:rgba(255,255,255,.06);border:1px solid var(--line-2);color:var(--lav-bright);margin-bottom:18px}
+.mf-t{font-size:17px;font-weight:700;color:var(--white);letter-spacing:-.3px;line-height:1.25;margin-bottom:10px}
+.mf-d{font-size:13px;color:var(--t2);line-height:1.6;margin-bottom:16px}
+.mf-l{font-size:13px;font-weight:600;color:var(--lav)}
+
+/* ── BURGER + MOBILE NAV ── */
+.burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:40px;height:40px;background:var(--glass);border:1px solid var(--line-2);border-radius:10px;cursor:pointer;padding:0 10px}
+.burger span{display:block;height:2px;background:var(--t1);border-radius:2px;transition:transform .3s var(--ease),opacity .2s}
+.burger.on span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger.on span:nth-child(2){opacity:0}
+.burger.on span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mnav{position:fixed;inset:0;z-index:250;background:var(--bg);transform:translateX(100%);transition:transform .4s var(--ease);display:flex;flex-direction:column;overflow:hidden}
+.mnav.open{transform:none}
+.mnav-head{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--line);flex-shrink:0}
+.mnav-close{background:var(--glass);border:1px solid var(--line-2);color:var(--t1);width:40px;height:40px;border-radius:10px;font-size:16px;cursor:pointer}
+.mnav-body{flex:1;overflow-y:auto;padding:8px 22px}
+.mnav details{border-bottom:1px solid var(--line)}
+.mnav summary{list-style:none;cursor:pointer;font-size:18px;font-weight:600;color:var(--white);padding:18px 4px;display:flex;align-items:center;justify-content:space-between}
+.mnav summary::-webkit-details-marker{display:none}
+.mnav summary::after{content:'+';font-size:22px;font-weight:400;color:var(--lav)}
+.mnav details[open] summary::after{content:'–'}
+.msec{display:flex;flex-direction:column;padding:4px 0 18px}
+.msec-h{font-family:var(--fm);font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--lav);margin:14px 0 6px}
+.msec a{font-size:15px;color:var(--t2);padding:9px 0;transition:color .2s}
+.msec a:hover{color:var(--white)}
+.msec a.ind{padding-left:16px;font-size:14px;color:var(--t3)}
+.mnav-foot{flex-shrink:0;display:flex;align-items:center;gap:16px;padding:18px 22px;border-top:1px solid var(--line)}
+.mnav-foot .btn{flex:1;justify-content:center}
 
 /* ════ BUTTONS ════ */
 .btn{display:inline-flex;align-items:center;gap:9px;font-size:14.5px;font-weight:600;padding:13px 24px;border-radius:11px;transition:transform .25s var(--ease),box-shadow .25s,background .25s,border-color .25s,color .25s;white-space:nowrap}
@@ -278,6 +340,12 @@ footer{background:var(--bg-2);border-top:1px solid var(--line);padding:74px 0 36
 .s1{transition-delay:.08s}.s2{transition-delay:.16s}.s3{transition-delay:.24s}
 
 /* ════ RESPONSIVE ════ */
+@media(max-width:1060px){
+  .nav-links{display:none}
+  .nav-right .nav-ghost,.nav-right .btn-p{display:none}
+  .burger{display:flex}
+  .mega{display:none}
+}
 @media(max-width:980px){
   .console-body{grid-template-columns:1fr}
   .console-side{display:none}
@@ -320,19 +388,230 @@ footer{background:var(--bg-2);border-top:1px solid var(--line);padding:74px 0 36
 <nav class="nav" id="nav">
   <div class="c nav-row">
     <a href="#top" class="logo">zeta<span class="d"></span></a>
-    <div class="nav-links">
-      <a href="#platforms">Platforms</a>
-      <a href="#approach">Solutions</a>
-      <a href="#case">Customers</a>
-      <a href="#infrastructure">Infrastructure</a>
-      <a href="#insights">Resources</a>
+    <div class="nav-links" id="navLinks">
+      <button class="nav-trigger" data-panel="modern" aria-haspopup="true" aria-expanded="false">Modernisation<span class="chev"></span></button>
+      <button class="nav-trigger" data-panel="platform" aria-haspopup="true" aria-expanded="false">Platform<span class="chev"></span></button>
+      <button class="nav-trigger" data-panel="solutions" aria-haspopup="true" aria-expanded="false">Solutions<span class="chev"></span></button>
+      <button class="nav-trigger" data-panel="services" aria-haspopup="true" aria-expanded="false">Services<span class="chev"></span></button>
+      <button class="nav-trigger" data-panel="resources" aria-haspopup="true" aria-expanded="false">Resources<span class="chev"></span></button>
+      <button class="nav-trigger" data-panel="company" aria-haspopup="true" aria-expanded="false">Company<span class="chev"></span></button>
     </div>
     <div class="nav-right">
       <a href="#" class="nav-ghost">Sign in</a>
       <a href="#contact" class="btn btn-p btn-sm">Talk to us <span class="ar">→</span></a>
+      <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+
+  <!-- MEGA MENU -->
+  <div class="mega" id="mega">
+    <div class="mega-bg">
+      <div class="c">
+
+        <!-- Modernisation -->
+        <div class="mega-panel" data-panel="modern">
+          <div class="mega-inner">
+            <a href="#" class="mega-feature">
+              <div class="mf-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
+              <div class="mf-t">Modern Banking Reference Architecture</div>
+              <div class="mf-d">The blueprint for migrating off legacy — a composable, cloud-native foundation for regulated banking.</div>
+              <span class="mf-l">Explore the architecture →</span>
+            </a>
+            <div class="mega-cols">
+              <div class="mcol">
+                <div class="mcol-h">Modernisation Strategies</div>
+                <a class="mitem" href="#">Modern Banking Reference Architecture</a>
+                <a class="mitem" href="#case">Migration Case Studies</a>
+                <a class="mitem" href="#infrastructure">Platform Strength</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Platform -->
+        <div class="mega-panel" data-panel="platform">
+          <div class="mega-inner">
+            <a href="#platforms" class="mega-feature">
+              <div class="mf-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+              <div class="mf-t">Platform Overview</div>
+              <div class="mf-d">Three proprietary, cloud-native platforms — Tachyon, Cipher, and Neutrino — engineered from first principles.</div>
+              <span class="mf-l">See the platform →</span>
+            </a>
+            <div class="mega-cols">
+              <div class="mcol">
+                <div class="mcol-h">Issuing</div>
+                <a class="mitem" href="#">Credit Cards</a>
+                <a class="mitem" href="#">Debit Cards</a>
+                <a class="mitem" href="#">Prepaid Accounts</a>
+                <a class="mitem" href="#">Virtual Cards</a>
+              </div>
+              <div class="mcol">
+                <div class="mcol-h">Digital Payments &amp; Processing</div>
+                <a class="mitem" href="#">UPI Issuer Processing</a>
+                <a class="mitem" href="#">UPI Acquirer Processing</a>
+                <a class="mitem" href="#">Checkout</a>
+                <a class="mitem" href="#">Issuer Wallets</a>
+              </div>
+              <div class="mcol">
+                <div class="mcol-h">Digital Banking</div>
+                <a class="mitem" href="#">Digital Accounts</a>
+                <a class="mitem" href="#">Digital Engagement</a>
+                <div class="mcol-h" style="margin-top:22px">Identity &amp; Access</div>
+                <a class="mitem" href="#">Consumer IAM</a>
+                <a class="mitem" href="#">Credit Line on UPI</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Solutions -->
+        <div class="mega-panel" data-panel="solutions">
+          <div class="mega-inner">
+            <div class="mega-cols cols-4">
+              <div class="mcol">
+                <div class="mcol-h">Credit Cards</div>
+                <a class="mlead" href="#">Retail Credit Cards</a>
+                <div class="mgroup">
+                  <a class="mlead" href="#">Corporate Credit Cards</a>
+                  <a class="msub" href="#">Corporate Cards</a>
+                  <a class="msub" href="#">Virtual Credit Cards</a>
+                </div>
+                <a class="mlead" href="#">Co-branded Credit Cards</a>
+              </div>
+              <div class="mcol">
+                <div class="mcol-h">Prepaid</div>
+                <div class="mgroup">
+                  <a class="mlead" href="#">Corporate Prepaid Solutions</a>
+                  <a class="msub" href="#">Closed Loop Wallets</a>
+                  <a class="msub" href="#">Employee Benefits</a>
+                </div>
+                <div class="mgroup">
+                  <a class="mlead" href="#">Retail Prepaid Solutions</a>
+                  <a class="msub" href="#">General Purpose Reloadable</a>
+                </div>
+              </div>
+              <div class="mcol">
+                <div class="mcol-h">UPI</div>
+                <div class="mgroup">
+                  <a class="mlead" href="#">UPI Issuing</a>
+                  <a class="msub" href="#">UPI Issuing Switch</a>
+                  <a class="msub" href="#">UPI Issuing PSP</a>
+                </div>
+                <div class="mgroup">
+                  <a class="mlead" href="#">UPI Acquiring</a>
+                  <a class="msub" href="#">UPI Acquiring Switch</a>
+                  <a class="msub" href="#">UPI Acquiring PSP</a>
+                </div>
+              </div>
+              <div class="mcol">
+                <div class="mcol-h">Credit Line</div>
+                <div class="mgroup">
+                  <a class="mlead" href="#">Credit Line on UPI (CLOU)</a>
+                  <a class="msub" href="#">BNPL</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Services -->
+        <div class="mega-panel" data-panel="services">
+          <div class="mega-inner">
+            <div class="mega-cols cols-2">
+              <div class="mcol">
+                <div class="mcol-h">Services</div>
+                <a class="mitem-rich" href="#"><b>Zeta Studios</b><span>Design and build for differentiated banking experiences.</span></a>
+                <a class="mitem-rich" href="#"><b>Operations</b><span>Run, monitor, and scale live programmes around the clock.</span></a>
+              </div>
+              <div class="mcol">
+                <div class="mcol-h">&nbsp;</div>
+                <a class="mitem-rich" href="#"><b>Customer Support</b><span>Tiered support across every market and channel.</span></a>
+                <a class="mitem-rich" href="#"><b>Fulfillment Services</b><span>Card production, personalisation, and delivery at scale.</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Resources -->
+        <div class="mega-panel" data-panel="resources">
+          <div class="mega-inner">
+            <a href="#case" class="mega-feature">
+              <div class="mf-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg></div>
+              <div class="mf-t">Case Studies</div>
+              <div class="mf-d">How PayZapp helped India's largest private bank reclaim payment primacy.</div>
+              <span class="mf-l">Read the stories →</span>
+            </a>
+            <div class="mega-cols">
+              <div class="mcol">
+                <div class="mcol-h">Insights</div>
+                <a class="mitem" href="#insights">eBooks</a>
+                <a class="mitem" href="#insights">Whitepapers</a>
+                <a class="mitem" href="#insights">Reports</a>
+                <a class="mitem" href="#insights">Blog</a>
+              </div>
+              <div class="mcol">
+                <div class="mcol-h">More</div>
+                <a class="mitem" href="#">Case Studies</a>
+                <a class="mitem" href="#">Events</a>
+                <a class="mitem" href="#">Trust Centre</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Company -->
+        <div class="mega-panel" data-panel="company">
+          <div class="mega-inner">
+            <div class="mega-cols cols-2">
+              <div class="mcol">
+                <div class="mcol-h">Company</div>
+                <a class="mitem" href="#">Manifesto</a>
+                <a class="mitem" href="#">About Us</a>
+                <a class="mitem" href="#">Our Investors</a>
+              </div>
+              <div class="mcol">
+                <div class="mcol-h">&nbsp;</div>
+                <a class="mitem" href="#">Newsroom</a>
+                <a class="mitem" href="#">Careers</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
 </nav>
+
+<!-- MOBILE MENU -->
+<div class="mnav" id="mnav">
+  <div class="mnav-head">
+    <span class="logo">zeta<span class="d"></span></span>
+    <button class="mnav-close" id="mnavClose" aria-label="Close menu">✕</button>
+  </div>
+  <div class="mnav-body">
+    <details><summary>Modernisation</summary><div class="msec"><a href="#">Modern Banking Reference Architecture</a><a href="#case">Migration Case Studies</a><a href="#infrastructure">Platform Strength</a></div></details>
+    <details><summary>Platform</summary><div class="msec">
+      <span class="msec-h">Issuing</span><a href="#">Credit Cards</a><a href="#">Debit Cards</a><a href="#">Prepaid Accounts</a><a href="#">Virtual Cards</a>
+      <span class="msec-h">Digital Payments &amp; Processing</span><a href="#">UPI Issuer Processing</a><a href="#">UPI Acquirer Processing</a><a href="#">Checkout</a><a href="#">Issuer Wallets</a>
+      <span class="msec-h">Digital Banking</span><a href="#">Digital Accounts</a><a href="#">Digital Engagement</a>
+      <span class="msec-h">Identity &amp; Access</span><a href="#">Consumer IAM</a><a href="#">Credit Line on UPI</a>
+    </div></details>
+    <details><summary>Solutions</summary><div class="msec">
+      <span class="msec-h">Credit Cards</span><a href="#">Retail Credit Cards</a><a href="#">Corporate Credit Cards</a><a href="#" class="ind">Corporate Cards</a><a href="#" class="ind">Virtual Credit Cards</a><a href="#">Co-branded Credit Cards</a>
+      <span class="msec-h">Prepaid</span><a href="#">Corporate Prepaid Solutions</a><a href="#" class="ind">Closed Loop Wallets</a><a href="#" class="ind">Employee Benefits</a><a href="#">Retail Prepaid Solutions</a><a href="#" class="ind">General Purpose Reloadable</a>
+      <span class="msec-h">UPI</span><a href="#">UPI Issuing</a><a href="#" class="ind">UPI Issuing Switch</a><a href="#" class="ind">UPI Issuing PSP</a><a href="#">UPI Acquiring</a><a href="#" class="ind">UPI Acquiring Switch</a><a href="#" class="ind">UPI Acquiring PSP</a>
+      <span class="msec-h">Credit Line</span><a href="#">Credit Line on UPI (CLOU)</a><a href="#" class="ind">BNPL</a>
+    </div></details>
+    <details><summary>Services</summary><div class="msec"><a href="#">Zeta Studios</a><a href="#">Operations</a><a href="#">Customer Support</a><a href="#">Fulfillment Services</a></div></details>
+    <details><summary>Resources</summary><div class="msec"><a href="#">Case Studies</a><span class="msec-h">Insights</span><a href="#insights">eBooks</a><a href="#insights">Whitepapers</a><a href="#insights">Reports</a><a href="#insights">Blog</a><a href="#">Events</a><a href="#">Trust Centre</a></div></details>
+    <details><summary>Company</summary><div class="msec"><a href="#">Manifesto</a><a href="#">About Us</a><a href="#">Our Investors</a><a href="#">Newsroom</a><a href="#">Careers</a></div></details>
+  </div>
+  <div class="mnav-foot">
+    <a href="#" class="nav-ghost">Sign in</a>
+    <a href="#contact" class="btn btn-p">Talk to us →</a>
+  </div>
+</div>
 
 <!-- HERO -->
 <header class="hero" id="top">
@@ -682,8 +961,44 @@ footer{background:var(--bg-2);border-top:1px solid var(--line);padding:74px 0 36
     });
   }
 
+  /* ── MEGA MENU ── */
+  var mega=document.getElementById('mega'),triggers=Array.prototype.slice.call(document.querySelectorAll('.nav-trigger')),
+      panels=Array.prototype.slice.call(document.querySelectorAll('.mega-panel')),closeT=null,current=null;
+  function openPanel(name){
+    clearTimeout(closeT);
+    if(current===name && mega.classList.contains('open'))return;
+    current=name;
+    panels.forEach(function(p){p.classList.toggle('show',p.getAttribute('data-panel')===name);});
+    triggers.forEach(function(t){var a=t.getAttribute('data-panel')===name;t.classList.toggle('active',a);t.setAttribute('aria-expanded',a?'true':'false');});
+    mega.classList.add('open');nav.classList.add('mega-active');
+  }
+  function closeMega(){
+    mega.classList.remove('open');nav.classList.remove('mega-active');current=null;
+    triggers.forEach(function(t){t.classList.remove('active');t.setAttribute('aria-expanded','false');});
+  }
+  function schedClose(){clearTimeout(closeT);closeT=setTimeout(closeMega,180);}
+  triggers.forEach(function(t){
+    var name=t.getAttribute('data-panel');
+    t.addEventListener('mouseenter',function(){openPanel(name);});
+    t.addEventListener('focus',function(){openPanel(name);});
+    t.addEventListener('click',function(e){e.preventDefault();if(current===name&&mega.classList.contains('open'))closeMega();else openPanel(name);});
+  });
+  [nav,mega].forEach(function(el){
+    el.addEventListener('mouseenter',function(){clearTimeout(closeT);});
+    el.addEventListener('mouseleave',schedClose);
+  });
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeMega();closeMobile();}});
+
+  /* ── MOBILE NAV ── */
+  var burger=document.getElementById('burger'),mnav=document.getElementById('mnav'),mnavClose=document.getElementById('mnavClose');
+  function openMobile(){mnav.classList.add('open');burger.classList.add('on');burger.setAttribute('aria-expanded','true');document.body.classList.add('lock');}
+  function closeMobile(){mnav.classList.remove('open');burger.classList.remove('on');burger.setAttribute('aria-expanded','false');document.body.classList.remove('lock');}
+  burger.addEventListener('click',function(){mnav.classList.contains('open')?closeMobile():openMobile();});
+  mnavClose.addEventListener('click',closeMobile);
+  mnav.querySelectorAll('.msec a, .mnav-foot a').forEach(function(a){a.addEventListener('click',closeMobile);});
+
   /* ── SAFETY ── */
-  window.addEventListener('load',function(){setTimeout(function(){if(document.body.classList.contains('lock')){loader.classList.add('done');document.body.classList.remove('lock');startNet();startReveal();}},2600);});
+  window.addEventListener('load',function(){setTimeout(function(){if(document.body.classList.contains('lock')&&!mnav.classList.contains('open')){loader.classList.add('done');document.body.classList.remove('lock');startNet();startReveal();}},2600);});
 })();
 </script>
 </body>
