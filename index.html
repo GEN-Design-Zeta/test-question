@@ -334,6 +334,50 @@ footer{background:var(--bg-2);border-top:1px solid var(--line);padding:74px 0 36
 .foot-certs{display:flex;gap:8px;flex-wrap:wrap}
 .fcert{font-family:var(--fm);font-size:10.5px;color:var(--t3);border:1px solid var(--line);border-radius:100px;padding:5px 11px}
 
+/* ════ LIGHT SECTIONS ════ */
+.ls{
+  background:#F8F7FD;
+  color:#19132A;
+  --bg:#F8F7FD;
+  --bg-2:#F0EEF9;
+  --bg-3:#E8E4F5;
+  --glass:rgba(255,255,255,.9);
+  --glass-2:#fff;
+  --t1:#19132A;
+  --t2:#4B4568;
+  --t3:#8B87A8;
+  --t4:#BDB9D4;
+  --white:#19132A;
+  --line:rgba(100,75,200,.1);
+  --line-2:rgba(100,75,200,.18);
+  --glow:rgba(138,107,240,.2);
+  --lav:#6A4BD6;
+  --lav-bright:#8A6BF0;
+  --lav-soft:#9B87E5;
+  --grad-line:linear-gradient(120deg,rgba(138,107,240,.2),rgba(138,107,240,.03) 60%);
+}
+/* Cards on white need real shadows instead of the dark-mode deep drop */
+.ls .glass{
+  background:#fff;
+  border-color:rgba(100,75,200,.13);
+  box-shadow:0 2px 8px rgba(70,40,180,.05),0 8px 28px rgba(70,40,180,.05);
+}
+.ls .glass:hover{
+  transform:translateY(-6px);
+  box-shadow:0 6px 18px rgba(70,40,180,.1),0 28px 56px rgba(70,40,180,.09);
+  border-color:rgba(138,107,240,.32);
+}
+.ls .glass:hover::before{opacity:.4}
+/* Platform icon needs purple tint to be visible on white */
+.ls .plat-ic{background:rgba(106,75,214,.08);border-color:rgba(106,75,214,.2)}
+/* Unselected payment icon barely shows on white */
+.ls .pay-opt:not(.on) .pay-ic{background:rgba(106,75,214,.07);color:var(--t3)}
+/* Internal dividers */
+.ls .appr-stat{border-top-color:rgba(100,75,200,.12)}
+.ls .plat-caps li{border-top-color:rgba(100,75,200,.1)}
+/* Strip border on light bg */
+.strip.ls{border-top-color:rgba(100,75,200,.1);border-bottom-color:rgba(100,75,200,.1)}
+
 /* ════ REVEAL ════ */
 .rv{opacity:0;transform:translateY(28px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
 .rv.in{opacity:1;transform:none}
@@ -668,7 +712,7 @@ footer{background:var(--bg-2);border-top:1px solid var(--line);padding:74px 0 36
 </header>
 
 <!-- LOGO STRIP -->
-<section class="strip">
+<section class="strip ls">
   <div class="c">
     <div class="strip-lab">Powering banking for the institutions people trust</div>
     <div class="strip-row"><span>HDFC Bank</span><span>PayZapp</span><span>Mastercard</span><span>Visa</span><span>RuPay</span><span>NPCI</span></div>
@@ -676,7 +720,7 @@ footer{background:var(--bg-2);border-top:1px solid var(--line);padding:74px 0 36
 </section>
 
 <!-- APPROACH -->
-<section class="sec" id="approach">
+<section class="sec ls" id="approach">
   <div class="c">
     <div class="sec-head rv">
       <span class="eyebrow">Our Approach</span>
@@ -710,7 +754,7 @@ footer{background:var(--bg-2);border-top:1px solid var(--line);padding:74px 0 36
 </section>
 
 <!-- PLATFORMS -->
-<section class="sec s-plat" id="platforms">
+<section class="sec s-plat ls" id="platforms">
   <div class="c">
     <div class="sec-head center rv">
       <span class="eyebrow">Platform IP</span>
@@ -768,7 +812,7 @@ footer{background:var(--bg-2);border-top:1px solid var(--line);padding:74px 0 36
 </section>
 
 <!-- CASE -->
-<section class="sec s-case" id="case">
+<section class="sec s-case ls" id="case">
   <div class="c">
     <div class="case-grid">
       <div class="rv">
@@ -839,7 +883,7 @@ footer{background:var(--bg-2);border-top:1px solid var(--line);padding:74px 0 36
 </section>
 
 <!-- INSIGHTS -->
-<section class="sec" id="insights">
+<section class="sec ls" id="insights">
   <div class="c">
     <div class="sec-head rv">
       <span class="eyebrow">Resources</span>
