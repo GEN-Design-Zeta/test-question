@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zeta — Platform-Led Banking Technology</title>
+<meta name="description" content="Zeta helps financial institutions build and scale what others won't take on — through proprietary cloud-native platforms, deep domain expertise, and a track record of complex delivery.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* ── DARK PREMIUM PALETTE ── */
+  --bg:#070512;            /* page base, near-black violet */
+  --bg-2:#0B0818;          /* alt section */
+  --bg-3:#0E0A1E;          /* raised section */
+  --surface:#120D24;       /* card */
+  --surface-2:#171130;     /* card hover / raised */
+  --line:rgba(139,114,224,.14);
+  --line-strong:rgba(139,114,224,.28);
+
+  --purple:#7B52E0;        /* primary */
+  --purple-bright:#9D7BFF; /* vivid accent */
+  --purple-deep:#5B2FD4;
+  --violet:#B794FF;
+  --glow:#8B5CF6;
+
+  --teal:#2DD4BF;
+  --gold:#F2C14E;
+  --coral:#FF6B5B;
+
+  --white:#F7F5FF;
+  --t1:#EDEAFB;            /* primary text */
+  --t2:#B6AED6;            /* secondary */
+  --t3:#8079A3;            /* muted */
+  --t4:#5A5478;            /* faint */
+
+  --fd:'DM Serif Display',Georgia,serif;
+  --fb:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;
+  --max:1200px;
+  --sp:120px;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--fb);
+  background:var(--bg);
+  color:var(--t1);
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+body.loading{overflow:hidden;height:100vh}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+::selection{background:rgba(157,123,255,.35);color:#fff}
+
+.c{max-width:var(--max);margin:0 auto;padding:0 40px}
+
+/* ════════════════════════════════════════════
+   PRELOADER
+════════════════════════════════════════════ */
+.loader{
+  position:fixed;inset:0;z-index:2000;
+  background:radial-gradient(circle at 50% 50%,#0E0A22 0%,#050310 70%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:30px;transition:opacity .7s var(--ease),visibility .7s;
+}
+.loader.done{opacity:0;visibility:hidden}
+.loader-mark{
+  font-family:var(--fb);font-weight:700;font-size:64px;letter-spacing:-2px;
+  color:#fff;position:relative;display:flex;align-items:center;
+}
+.loader-mark .dot{
+  width:12px;height:12px;border-radius:50%;margin-left:6px;
+  background:var(--purple-bright);
+  box-shadow:0 0 26px 4px rgba(157,123,255,.85);
+  animation:pulse 1.1s var(--ease) infinite;
+}
+.loader-mark::after{
+  content:'';position:absolute;left:-10%;right:-10%;top:50%;height:140%;transform:translateY(-50%);
+  background:radial-gradient(ellipse 60% 60% at 50% 50%,rgba(123,82,224,.4),transparent 70%);
+  filter:blur(24px);z-index:-1;
+}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:.5}}
+.loader-track{
+  width:220px;height:3px;border-radius:3px;background:rgba(139,114,224,.16);overflow:hidden;
+}
+.loader-bar{
+  height:100%;width:0%;border-radius:3px;
+  background:linear-gradient(90deg,var(--purple),var(--purple-bright),var(--violet));
+  box-shadow:0 0 14px rgba(157,123,255,.7);
+  transition:width .25s var(--ease);
+}
+.loader-pct{font-size:12px;letter-spacing:3px;color:var(--t3);text-transform:uppercase;font-weight:600}
+
+/* ════════════════════════════════════════════
+   AMBIENT BACKGROUND GLOWS
+════════════════════════════════════════════ */
+.ambient{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.5}
+.orb-1{width:620px;height:620px;top:-220px;left:-160px;background:radial-gradient(circle,rgba(123,82,224,.55),transparent 68%);animation:float1 22s ease-in-out infinite}
+.orb-2{width:520px;height:520px;top:18%;right:-200px;background:radial-gradient(circle,rgba(91,47,212,.5),transparent 68%);animation:float2 26s ease-in-out infinite}
+.orb-3{width:480px;height:480px;bottom:-160px;left:30%;background:radial-gradient(circle,rgba(45,212,191,.16),transparent 68%);animation:float3 30s ease-in-out infinite}
+@keyframes float1{0%,100%{transform:translate(0,0)}50%{transform:translate(80px,60px)}}
+@keyframes float2{0%,100%{transform:translate(0,0)}50%{transform:translate(-70px,40px)}}
+@keyframes float3{0%,100%{transform:translate(0,0)}50%{transform:translate(50px,-50px)}}
+.grid-overlay{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(139,114,224,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(139,114,224,.05) 1px,transparent 1px);
+  background-size:64px 64px;
+  -webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 0%,transparent 75%);
+  mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 0%,transparent 75%);
+}
+.page{position:relative;z-index:1}
+
+/* ════════════════════════════════════════════
+   REVEAL ANIMATIONS
+════════════════════════════════════════════ */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.rv.on{opacity:1;transform:none}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
+.d4{transition-delay:.32s}.d5{transition-delay:.40s}.d6{transition-delay:.48s}
+@media(prefers-reduced-motion:reduce){
+  .rv{opacity:1!important;transform:none!important}
+  .orb,.loader-mark .dot{animation:none!important}
+}
+
+/* ════════════════════════════════════════════
+   SHARED TYPE
+════════════════════════════════════════════ */
+.kicker{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:11px;font-weight:700;letter-spacing:2.4px;text-transform:uppercase;
+  color:var(--purple-bright);margin-bottom:18px;
+}
+.kicker::before{content:'';width:26px;height:1px;background:linear-gradient(90deg,var(--purple),transparent)}
+.sec-title{font-family:var(--fd);font-weight:400;font-size:clamp(30px,4vw,46px);line-height:1.12;letter-spacing:-.5px;color:var(--white)}
+.sec-title em{font-style:italic;color:var(--purple-bright)}
+.sec-sub{font-size:16.5px;color:var(--t2);line-height:1.7;margin-top:16px;max-width:560px}
+.gradient-text{background:linear-gradient(110deg,var(--violet),var(--purple-bright) 55%,#fff);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* ── Buttons ── */
+.btn-p{
+  position:relative;display:inline-flex;align-items:center;gap:9px;
+  padding:15px 30px;border-radius:12px;font-weight:700;font-size:14.5px;color:#fff;
+  background:linear-gradient(120deg,var(--purple-deep),var(--purple) 60%,var(--purple-bright));
+  box-shadow:0 8px 30px -8px rgba(123,82,224,.7);
+  transition:transform .25s var(--ease),box-shadow .25s var(--ease);overflow:hidden;
+}
+.btn-p::after{content:'';position:absolute;inset:0;background:linear-gradient(120deg,transparent,rgba(255,255,255,.25),transparent);transform:translateX(-120%);transition:transform .6s var(--ease)}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 14px 40px -8px rgba(123,82,224,.85)}
+.btn-p:hover::after{transform:translateX(120%)}
+.btn-g{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:15px 26px;border-radius:12px;font-weight:600;font-size:14.5px;color:var(--t1);
+  background:rgba(255,255,255,.04);border:1px solid var(--line-strong);
+  transition:all .25s var(--ease);
+}
+.btn-g:hover{background:rgba(157,123,255,.1);border-color:var(--purple-bright);color:#fff;transform:translateY(-2px)}
+
+/* ════════════════════════════════════════════
+   NAV
+════════════════════════════════════════════ */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;height:72px;
+  display:flex;align-items:center;gap:48px;padding:0 40px;
+  background:transparent;border-bottom:1px solid transparent;
+  transition:background .35s var(--ease),border-color .35s var(--ease),height .35s var(--ease),backdrop-filter .35s;
+}
+.nav.scrolled{
+  height:62px;background:rgba(9,6,20,.78);backdrop-filter:blur(18px) saturate(160%);
+  border-bottom:1px solid var(--line);
+}
+.nav-logo{font-size:23px;font-weight:700;letter-spacing:-1px;color:#fff;display:flex;align-items:center}
+.nav-logo .dot{width:7px;height:7px;border-radius:50%;background:var(--purple-bright);margin-left:3px;box-shadow:0 0 12px rgba(157,123,255,.9)}
+.nav-links{display:flex;align-items:center;gap:34px}
+.nav-link{font-size:14px;font-weight:500;color:var(--t2);position:relative;transition:color .2s}
+.nav-link::after{content:'';position:absolute;left:0;bottom:-6px;width:0;height:1.5px;background:var(--purple-bright);transition:width .25s var(--ease)}
+.nav-link:hover{color:#fff}
+.nav-link:hover::after{width:100%}
+.nav-cta{
+  margin-left:auto;display:inline-flex;align-items:center;gap:8px;
+  padding:10px 22px;border-radius:10px;font-size:13.5px;font-weight:600;color:#fff;
+  background:linear-gradient(120deg,var(--purple-deep),var(--purple-bright));
+  box-shadow:0 6px 20px -6px rgba(123,82,224,.7);transition:transform .2s var(--ease),box-shadow .2s;
+}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:0 10px 26px -6px rgba(123,82,224,.9)}
+
+/* ════════════════════════════════════════════
+   HERO
+════════════════════════════════════════════ */
+.hero{
+  position:relative;text-align:center;
+  padding:200px 0 120px;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:9px;
+  padding:7px 18px 7px 12px;border-radius:100px;
+  background:rgba(157,123,255,.08);border:1px solid var(--line-strong);
+  font-size:12px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--violet);
+  margin-bottom:30px;backdrop-filter:blur(8px);
+}
+.hero-pip{width:7px;height:7px;border-radius:50%;background:var(--purple-bright);box-shadow:0 0 10px rgba(157,123,255,.9);animation:pulse 1.6s ease-in-out infinite}
+.hero-h{
+  font-family:var(--fd);font-weight:400;
+  font-size:clamp(46px,7vw,92px);line-height:1.03;letter-spacing:-2px;
+  color:var(--white);max-width:920px;margin:0 auto 26px;
+}
+.hero-h em{font-style:italic;color:transparent;background:linear-gradient(110deg,var(--violet),var(--purple-bright));-webkit-background-clip:text;background-clip:text;position:relative}
+.hero-sub{font-size:19px;line-height:1.7;color:var(--t2);max-width:600px;margin:0 auto 42px}
+.hero-btns{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap}
+.hero-scroll{margin-top:84px;display:inline-flex;flex-direction:column;align-items:center;gap:10px;color:var(--t3);font-size:11px;letter-spacing:2px;text-transform:uppercase}
+.hero-scroll .mouse{width:24px;height:38px;border:1.5px solid var(--line-strong);border-radius:14px;position:relative}
+.hero-scroll .mouse::after{content:'';position:absolute;top:7px;left:50%;transform:translateX(-50%);width:4px;height:7px;border-radius:3px;background:var(--purple-bright);animation:scrolldot 1.8s var(--ease) infinite}
+@keyframes scrolldot{0%{opacity:0;top:7px}40%{opacity:1}80%{opacity:0;top:18px}100%{opacity:0}}
+
+/* logo marquee */
+.marquee-wrap{padding:40px 0 30px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;position:relative}
+.marquee-wrap::before,.marquee-wrap::after{content:'';position:absolute;top:0;bottom:0;width:140px;z-index:2}
+.marquee-wrap::before{left:0;background:linear-gradient(90deg,var(--bg),transparent)}
+.marquee-wrap::after{right:0;background:linear-gradient(270deg,var(--bg),transparent)}
+.marquee-label{text-align:center;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--t3);margin-bottom:22px;font-weight:600}
+.marquee{display:flex;gap:64px;width:max-content;animation:scrollx 28s linear infinite}
+.marquee span{font-size:20px;font-weight:700;color:var(--t3);letter-spacing:-.5px;white-space:nowrap;transition:color .2s}
+.marquee span:hover{color:var(--violet)}
+@keyframes scrollx{to{transform:translateX(-50%)}}
+
+/* ════════════════════════════════════════════
+   SECTION SHELL
+════════════════════════════════════════════ */
+section{position:relative}
+.s-pad{padding:var(--sp) 0}
+
+/* ── APPROACH ── */
+.approach-top{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;margin-bottom:64px}
+.approach-h{font-family:var(--fd);font-weight:400;font-size:clamp(30px,4vw,52px);line-height:1.08;letter-spacing:-1px;color:var(--white)}
+.approach-h em{font-style:italic;color:var(--purple-bright)}
+.approach-body{font-size:16px;color:var(--t2);line-height:1.85;margin-bottom:26px}
+.approach-body strong{color:var(--t1);font-weight:600}
+.approach-outcome{font-family:var(--fd);font-style:italic;font-size:21px;color:var(--white);line-height:1.5;padding-left:24px;border-left:3px solid var(--purple)}
+.stmts{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.stmt{
+  position:relative;padding:34px 30px 32px;border-radius:18px;overflow:hidden;
+  background:linear-gradient(160deg,var(--surface),var(--bg-3));
+  border:1px solid var(--line);transition:transform .35s var(--ease),border-color .35s,box-shadow .35s;
+}
+.stmt::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent,var(--purple))}
+.stmt::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,var(--accent-glow,rgba(123,82,224,.12)),transparent 60%);opacity:0;transition:opacity .35s}
+.stmt:hover{transform:translateY(-6px);border-color:var(--line-strong);box-shadow:0 24px 50px -24px rgba(123,82,224,.5)}
+.stmt:hover::after{opacity:1}
+.stmt:nth-child(1){--accent:var(--purple-bright);--accent-glow:rgba(157,123,255,.16)}
+.stmt:nth-child(2){--accent:var(--teal);--accent-glow:rgba(45,212,191,.14)}
+.stmt:nth-child(3){--accent:var(--gold);--accent-glow:rgba(242,193,78,.14)}
+.stmt-num{font-family:var(--fd);font-size:18px;color:var(--accent);opacity:.85}
+.stmt-label{font-size:11px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--t3);margin:14px 0 8px}
+.stmt-name{font-size:19px;font-weight:600;color:var(--white);margin-bottom:12px;letter-spacing:-.3px}
+.stmt-detail{font-size:14.5px;color:var(--t2);line-height:1.7;margin-bottom:22px}
+.stmt-stat{padding-top:18px;border-top:1px solid var(--line);font-size:13px;color:var(--t3);line-height:1.5}
+.stmt-stat strong{display:block;font-family:var(--fd);font-size:30px;color:var(--white);margin-bottom:4px;font-weight:400}
+
+/* ── PROOF ── */
+.s-proof{background:linear-gradient(180deg,var(--bg),var(--bg-2));border-top:1px solid var(--line)}
+.proof-intro{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:26px}
+.proof-tag{font-size:11px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--purple-bright);margin-right:8px}
+.bdg{display:inline-flex;align-items:center;gap:7px;padding:6px 14px;border-radius:100px;background:rgba(255,255,255,.04);border:1px solid var(--line);font-size:12.5px;font-weight:600;color:var(--t2)}
+.bdg-dot{width:7px;height:7px;border-radius:50%;background:var(--t3)}
+.bdg-gold{border-color:rgba(242,193,78,.35);color:var(--gold)}.bdg-gold .bdg-dot{background:var(--gold);box-shadow:0 0 8px rgba(242,193,78,.7)}
+.proof-title{font-family:var(--fd);font-weight:400;font-size:clamp(28px,3.6vw,46px);line-height:1.13;letter-spacing:-.8px;color:var(--white);margin-bottom:60px;max-width:900px}
+.proof-title em{font-style:italic;color:var(--purple-bright)}
+.proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+.beat-tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:18px}
+.beat-coral{color:var(--coral)}.beat-teal{color:var(--teal)}
+.p-stat{display:flex;align-items:flex-start;line-height:1}
+.p-num{font-family:var(--fd);font-size:96px;color:var(--white);letter-spacing:-3px}
+.p-pct{font-family:var(--fd);font-size:48px;color:var(--coral);margin-top:8px}
+.p-h{font-size:23px;font-weight:600;color:var(--t1);line-height:1.35;margin:14px 0 18px;letter-spacing:-.3px}
+.p-sub{font-size:15.5px;color:var(--t2);line-height:1.75}
+.p-sub strong{color:var(--white);font-weight:600}
+.pay-card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px;margin-bottom:24px;box-shadow:0 24px 60px -30px rgba(0,0,0,.8)}
+.pay-card-hd{font-size:13px;font-weight:600;color:var(--t3);margin-bottom:16px;letter-spacing:.3px}
+.pay-row{display:flex;align-items:center;gap:14px;padding:14px;border-radius:12px;border:1px solid var(--line);margin-bottom:10px;transition:all .25s var(--ease)}
+.pay-row.sel{border-color:var(--purple-bright);background:rgba(157,123,255,.08);box-shadow:0 0 0 1px rgba(157,123,255,.3)}
+.pay-icon{width:42px;height:42px;border-radius:11px;display:grid;place-items:center;font-weight:700;font-size:17px;flex-shrink:0}
+.pay-info{flex:1}
+.pay-name{font-size:14.5px;font-weight:600;color:var(--white)}
+.pay-sub{font-size:12.5px;color:var(--t3)}
+.pay-radio{width:20px;height:20px;border-radius:50%;border:2px solid var(--line-strong);flex-shrink:0;position:relative}
+.pay-radio.on{border-color:var(--purple-bright)}
+.pay-radio.on::after{content:'';position:absolute;inset:3px;border-radius:50%;background:var(--purple-bright);box-shadow:0 0 10px rgba(157,123,255,.8)}
+.compact-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px}
+.cs{padding:18px 16px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid var(--line);text-align:center;transition:all .3s var(--ease)}
+.cs:hover{border-color:var(--line-strong);background:rgba(157,123,255,.06)}
+.csv{font-family:var(--fd);font-size:30px;color:var(--purple-bright);margin-bottom:6px}
+.csl{font-size:12px;color:var(--t3);line-height:1.45}
+.proof-cta{display:inline-flex;align-items:center;gap:7px;font-size:14px;font-weight:600;color:var(--purple-bright);transition:gap .2s}
+.proof-cta:hover{gap:12px}
+.proof-footer{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:64px;padding-top:30px;border-top:1px solid var(--line)}
+.award{display:inline-flex;align-items:center;gap:9px;font-size:13px;color:var(--gold);font-weight:600}
+.award-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px rgba(242,193,78,.7)}
+.footer-tagline{display:block;font-size:13px;color:var(--t3);margin-top:6px}
+.footer-cta{font-size:14px;font-weight:600;color:var(--purple-bright);display:inline-flex;gap:7px;transition:gap .2s}
+.footer-cta:hover{gap:12px}
+
+/* ── PLATFORMS ── */
+.platforms-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.plat-card{
+  position:relative;padding:36px 30px;border-radius:20px;overflow:hidden;
+  background:linear-gradient(165deg,var(--surface),var(--bg-3));border:1px solid var(--line);
+  transition:transform .4s var(--ease),border-color .4s,box-shadow .4s;
+}
+.plat-card::after{content:'';position:absolute;inset:0;opacity:0;transition:opacity .4s;background:radial-gradient(circle at 30% 0%,var(--pc-glow),transparent 60%)}
+.plat-card:hover{transform:translateY(-8px);border-color:var(--line-strong);box-shadow:0 30px 60px -30px var(--pc-glow)}
+.plat-card:hover::after{opacity:1}
+.plat-card:hover .plat-orb{transform:scale(1.08) rotate(-6deg)}
+.plat-card:nth-child(1){--pc:var(--purple-bright);--pc-glow:rgba(157,123,255,.4)}
+.plat-card:nth-child(2){--pc:var(--teal);--pc-glow:rgba(45,212,191,.32)}
+.plat-card:nth-child(3){--pc:var(--gold);--pc-glow:rgba(242,193,78,.3)}
+.plat-orb{
+  position:relative;z-index:1;width:54px;height:54px;border-radius:15px;display:grid;place-items:center;color:var(--pc);
+  background:rgba(255,255,255,.04);border:1px solid var(--line-strong);margin-bottom:22px;
+  transition:transform .4s var(--ease);box-shadow:0 0 26px -6px var(--pc-glow)}
+.plat-name{position:relative;z-index:1;font-family:var(--fd);font-size:26px;color:var(--pc);margin-bottom:4px}
+.plat-sub{position:relative;z-index:1;font-size:12px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--t3);margin-bottom:16px}
+.plat-desc{position:relative;z-index:1;font-size:14.5px;color:var(--t2);line-height:1.7;margin-bottom:22px}
+.plat-caps{position:relative;z-index:1;display:flex;flex-direction:column;gap:11px;margin-bottom:26px}
+.plat-cap{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:var(--t2);line-height:1.5}
+.cap-dot{width:6px;height:6px;border-radius:50%;background:var(--pc);margin-top:7px;flex-shrink:0;box-shadow:0 0 8px var(--pc-glow)}
+.plat-link{position:relative;z-index:1;font-size:14px;font-weight:600;color:var(--pc);display:inline-flex;gap:7px;transition:gap .2s}
+.plat-link:hover{gap:12px}
+.cert-strip{margin-top:48px;padding-top:32px;border-top:1px solid var(--line);display:flex;align-items:center;gap:28px;flex-wrap:wrap}
+.cert-strip-label{font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--t3)}
+.cert-chips{display:flex;gap:12px;flex-wrap:wrap}
+.cert-chip{padding:9px 18px;border-radius:10px;background:rgba(255,255,255,.03);border:1px solid var(--line);font-size:13px;font-weight:600;color:var(--t2);transition:all .25s}
+.cert-chip:hover{border-color:var(--line-strong);color:var(--white);background:rgba(157,123,255,.06)}
+
+/* ── TECH STRENGTH ── */
+.s-tech{background:linear-gradient(180deg,var(--bg-2),var(--bg))}
+.tech-head{text-align:center;max-width:760px;margin:0 auto 56px}
+.tech-head .sec-sub{margin-left:auto;margin-right:auto;text-align:center}
+.tech-stats-strip{display:grid;grid-template-columns:repeat(6,1fr);gap:0;border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-bottom:24px;background:var(--surface)}
+.tech-stat-cell{padding:30px 18px;text-align:center;border-right:1px solid var(--line);transition:background .3s}
+.tech-stat-cell:last-child{border-right:none}
+.tech-stat-cell:hover{background:rgba(157,123,255,.06)}
+.tech-stat-cell .sv{font-family:var(--fd);font-size:34px;color:var(--white);line-height:1;margin-bottom:8px}
+.tech-stat-cell .sv em{font-style:normal;font-size:18px;color:var(--purple-bright)}
+.tech-stat-cell .sl{font-size:11.5px;color:var(--t3);line-height:1.4}
+.tech-bento{display:grid;grid-template-columns:repeat(12,1fr);gap:20px}
+.tb{position:relative;padding:30px;border-radius:18px;background:linear-gradient(160deg,var(--surface),var(--bg-3));border:1px solid var(--line);overflow:hidden;transition:transform .35s var(--ease),border-color .35s,box-shadow .35s}
+.tb:hover{transform:translateY(-5px);border-color:var(--line-strong);box-shadow:0 24px 50px -28px rgba(123,82,224,.5)}
+.tb-w5{grid-column:span 5}.tb-w4{grid-column:span 4}.tb-w3{grid-column:span 3}
+.tb-bar{width:40px;height:3px;border-radius:3px;margin-bottom:18px}
+.bar-p{background:var(--purple-bright)}.bar-t{background:var(--teal)}.bar-c{background:var(--gold)}
+.tb-icon{font-size:26px;margin-bottom:14px;filter:drop-shadow(0 0 10px rgba(157,123,255,.4))}
+.tb h3{font-size:18px;font-weight:600;color:var(--white);margin-bottom:10px;letter-spacing:-.3px}
+.tb p{font-size:14px;color:var(--t2);line-height:1.7}
+.tb-stat-purple{background:linear-gradient(155deg,rgba(123,82,224,.22),var(--surface));border-color:rgba(157,123,255,.28)}
+.tb-stat-teal{background:linear-gradient(155deg,rgba(45,212,191,.16),var(--surface));border-color:rgba(45,212,191,.26)}
+.tb-flex{display:flex;flex-direction:column;justify-content:center;text-align:center}
+.tb-big-stat{font-family:var(--fd);font-size:54px;color:var(--white);line-height:1}
+.tb-big-stat em{font-style:normal;font-size:24px;color:var(--purple-bright)}
+.tb-stat-teal .tb-big-stat em{color:var(--teal)}
+.tb-sub-stat{font-size:13px;color:var(--t2);line-height:1.6;margin-top:12px}
+.cert-pills{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+.cert-pill{display:inline-flex;align-items:center;gap:7px;padding:6px 13px;border-radius:8px;background:rgba(255,255,255,.04);border:1px solid var(--line);font-size:12px;font-weight:600;color:var(--t2)}
+.cert-pill-dot{width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 8px rgba(45,212,191,.7)}
+
+/* ── INSIGHTS ── */
+.s-insights{border-top:1px solid var(--line)}
+.ins-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:40px}
+.ins-link{font-size:14px;font-weight:600;color:var(--purple-bright);display:inline-flex;gap:7px;transition:gap .2s}
+.ins-link:hover{gap:12px}
+.ins-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.ins-card{
+  position:relative;padding:32px 28px;border-radius:18px;overflow:hidden;
+  background:linear-gradient(165deg,var(--surface),var(--bg-3));border:1px solid var(--line);
+  transition:transform .35s var(--ease),border-color .35s,box-shadow .35s;min-height:230px;
+  display:flex;flex-direction:column;
+}
+.ins-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--purple),var(--purple-bright));transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease)}
+.ins-card:hover{transform:translateY(-6px);border-color:var(--line-strong);box-shadow:0 26px 54px -28px rgba(123,82,224,.5)}
+.ins-card:hover::before{transform:scaleX(1)}
+.ins-tag{display:inline-block;align-self:flex-start;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--purple-bright);padding:5px 12px;border-radius:7px;background:rgba(157,123,255,.1);border:1px solid var(--line);margin-bottom:18px}
+.ins-title{font-size:19px;font-weight:600;color:var(--white);line-height:1.3;margin-bottom:12px;letter-spacing:-.3px}
+.ins-sub{font-size:14px;color:var(--t2);line-height:1.65;flex:1}
+.ins-cta{margin-top:18px;font-size:13.5px;font-weight:600;color:var(--purple-bright);display:inline-flex;gap:7px;transition:gap .2s}
+.ins-card:hover .ins-cta{gap:12px}
+
+/* ── CTA ── */
+.s-cta{text-align:center;position:relative;overflow:hidden}
+.s-cta::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 50% 50%,rgba(123,82,224,.22),transparent 70%);pointer-events:none}
+.cta-inner{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:96px 48px;border-radius:28px;background:linear-gradient(165deg,var(--surface),var(--bg-3));border:1px solid var(--line-strong);box-shadow:0 40px 100px -40px rgba(123,82,224,.5)}
+.cta-inner h2{font-family:var(--fd);font-weight:400;font-size:clamp(32px,4.5vw,54px);line-height:1.1;letter-spacing:-1px;color:var(--white);margin-bottom:20px}
+.cta-inner p{font-size:17px;color:var(--t2);line-height:1.7;max-width:520px;margin:0 auto 36px}
+.cta-actions{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap}
+
+/* ── FOOTER ── */
+footer{border-top:1px solid var(--line);background:var(--bg-2);padding:72px 0 36px}
+.foot-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;padding-bottom:48px;border-bottom:1px solid var(--line)}
+.foot-logo{font-size:26px;font-weight:700;color:#fff;letter-spacing:-1px;margin-bottom:16px}
+.foot-tagline{font-size:14.5px;color:var(--t2);line-height:1.7;max-width:300px}
+.foot-col-title{font-size:12px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--t3);margin-bottom:18px}
+.foot-links{list-style:none;display:flex;flex-direction:column;gap:11px}
+.foot-links a{font-size:14px;color:var(--t2);transition:color .2s}
+.foot-links a:hover{color:var(--purple-bright)}
+.foot-bottom{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-top:28px}
+.foot-copy{font-size:13px;color:var(--t4)}
+.foot-certs{display:flex;gap:10px;flex-wrap:wrap}
+.foot-cert{padding:6px 13px;border-radius:8px;border:1px solid var(--line);font-size:11.5px;font-weight:600;color:var(--t3)}
+
+/* ════════════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════════════ */
+@media(max-width:900px){
+  .nav-links{display:none}
+  .approach-top{grid-template-columns:1fr;gap:36px}
+  .stmts{grid-template-columns:1fr}
+  .proof-grid{grid-template-columns:1fr;gap:48px}
+  .platforms-grid{grid-template-columns:1fr}
+  .tech-stats-strip{grid-template-columns:repeat(2,1fr)}
+  .tech-stat-cell:nth-child(2n){border-right:none}
+  .tech-stat-cell{border-bottom:1px solid var(--line)}
+  .tb-w5,.tb-w4,.tb-w3{grid-column:span 12}
+  .ins-grid{grid-template-columns:1fr}
+  .foot-top{grid-template-columns:1fr 1fr}
+}
+@media(max-width:560px){
+  .c{padding:0 22px}
+  .hero{padding:150px 0 90px}
+  .tech-stats-strip{grid-template-columns:1fr}
+  .tech-stat-cell{border-right:none}
+  .foot-top{grid-template-columns:1fr}
+  .cta-inner{padding:60px 26px}
+  .compact-stats{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body class="loading">
+
+<!-- ── PRELOADER ── -->
+<div class="loader" id="loader">
+  <div class="loader-mark">zeta<span class="dot"></span></div>
+  <div class="loader-track"><div class="loader-bar" id="loaderBar"></div></div>
+  <div class="loader-pct" id="loaderPct">0%</div>
+</div>
+
+<!-- ── AMBIENT BG ── -->
+<div class="ambient">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+<div class="grid-overlay"></div>
+
+<div class="page">
+
+<!-- ── NAV ── -->
+<nav class="nav" id="nav">
+  <span class="nav-logo">zeta<span class="dot"></span></span>
+  <div class="nav-links">
+    <a href="#platforms" class="nav-link">Platform</a>
+    <a href="#approach" class="nav-link">Solutions</a>
+    <a href="#proof" class="nav-link">Case Studies</a>
+    <a href="#insights" class="nav-link">Company</a>
+  </div>
+  <a href="#cta" class="nav-cta">Talk to us →</a>
+</nav>
+
+<!-- ── HERO ── -->
+<header class="hero">
+  <div class="c">
+    <div class="hero-badge rv"><span class="hero-pip"></span>Platform-Led Banking Technology</div>
+    <h1 class="hero-h rv d1">We solve the <em>hardest</em><br>problems in banking.</h1>
+    <p class="hero-sub rv d2">Zeta helps financial institutions build and scale what others won't take on. Through proprietary platforms, deep domain expertise, and a track record of complex delivery.</p>
+    <div class="hero-btns rv d3">
+      <a href="#approach" class="btn-p">See how we work →</a>
+      <a href="#proof" class="btn-g">View case studies</a>
+    </div>
+    <div class="hero-scroll rv d4">
+      <span class="mouse"></span>
+      Scroll to explore
+    </div>
+  </div>
+</header>
+
+<!-- ── TRUST MARQUEE ── -->
+<div class="marquee-wrap">
+  <div class="c"><div class="marquee-label">Trusted to power banking at scale across 7 countries</div></div>
+  <div class="marquee">
+    <span>HDFC Bank</span><span>PayZapp</span><span>Mastercard</span><span>Visa</span><span>RuPay</span><span>NPCI</span><span>Sparrow</span>
+    <span>HDFC Bank</span><span>PayZapp</span><span>Mastercard</span><span>Visa</span><span>RuPay</span><span>NPCI</span><span>Sparrow</span>
+  </div>
+</div>
+
+<!-- ── APPROACH ── -->
+<section class="s-approach s-pad" id="approach">
+  <div class="c">
+    <div class="approach-top">
+      <div>
+        <div class="kicker rv">Our Approach</div>
+        <h2 class="approach-h rv d1">
+          The right platforms.<br>
+          The right people.<br>
+          <em>The pedigree to deliver.</em>
+        </h2>
+      </div>
+      <div class="rv d2">
+        <p class="approach-body">
+          Zeta's practitioners have spent careers inside banking. They understand what a regulated financial institution actually needs, <strong>before it has been fully articulated in a brief</strong>. They built three cloud-native platforms from first principles, and they developed the implementation methodology to take the most complex programs live, on schedule, without exception.
+        </p>
+        <p class="approach-outcome">
+          The result is not just a solution to the problem in front of you. It is a foundation your bank can grow from, above and beyond what you need today.
+        </p>
+      </div>
+    </div>
+
+    <div class="stmts">
+      <div class="stmt rv d1">
+        <span class="stmt-num">01</span>
+        <div class="stmt-label">Platforms</div>
+        <div class="stmt-name">Built from first principles.</div>
+        <p class="stmt-detail">Tachyon, Cipher, and Neutrino. Three cloud-native platforms built from scratch, not adapted from legacy. Purpose-built for the scale and compliance requirements of modern banking.</p>
+        <div class="stmt-stat"><strong data-count="3">0</strong>Proprietary platforms. Cloud-native, API-first, fully certified</div>
+      </div>
+      <div class="stmt rv d2">
+        <span class="stmt-num">02</span>
+        <div class="stmt-label">People</div>
+        <div class="stmt-name">Domain experts, not generalists.</div>
+        <p class="stmt-detail">Banking practitioners who have built programmes inside financial institutions. They recognise the real problem before it has been fully articulated in a brief.</p>
+        <div class="stmt-stat"><strong data-count="1700" data-sfx="+">0</strong>Practitioners across banking, product, and technology</div>
+      </div>
+      <div class="stmt rv d3">
+        <span class="stmt-num">03</span>
+        <div class="stmt-label">Implementation Pedigree</div>
+        <div class="stmt-name">A methodology built to deliver.</div>
+        <p class="stmt-detail">The operating model and compliance framework to take complex programs live inside regulated environments. On schedule, without exception.</p>
+        <div class="stmt-stat"><strong data-count="25" data-sfx="M+">0</strong>Cards live across 7 countries</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROOF ── -->
+<section class="s-proof s-pad" id="proof">
+  <div class="c">
+    <div class="proof-intro rv">
+      <span class="proof-tag">The Solutions We Have Built</span>
+      <span class="bdg"><span class="bdg-dot"></span>HDFC Bank</span>
+      <span class="bdg"><span class="bdg-dot"></span>PayZapp</span>
+      <span class="bdg bdg-gold"><span class="bdg-dot"></span>Celent Model Bank 2024</span>
+    </div>
+
+    <h2 class="proof-title rv d1">
+      How Zeta helped India's largest private bank<br>
+      <em>reclaim customer primacy in payments.</em>
+    </h2>
+
+    <div class="proof-grid">
+      <div class="rv d1">
+        <span class="beat-tag beat-coral">The Problem</span>
+        <div class="p-stat">
+          <span class="p-num" data-count="95">0</span>
+          <span class="p-pct">%</span>
+        </div>
+        <h3 class="p-h">of customers of India's largest private bank were making payments through third-party apps.</h3>
+        <p class="p-sub">Three fintech apps controlled <strong>85% of all UPI transactions</strong> in India. The bank provided the infrastructure. It owned none of the relationship.</p>
+      </div>
+
+      <div class="rv d2">
+        <span class="beat-tag beat-teal">The Result</span>
+        <div class="pay-card">
+          <div class="pay-card-hd">Choose how to pay</div>
+          <div class="pay-row sel">
+            <div class="pay-icon" style="background:rgba(157,123,255,.18);color:var(--purple-bright)">P</div>
+            <div class="pay-info">
+              <div class="pay-name">PayZapp by HDFC Bank</div>
+              <div class="pay-sub">Pay via UPI, Cards, Wallet, and more</div>
+            </div>
+            <div class="pay-radio on"></div>
+          </div>
+          <div class="pay-row">
+            <div class="pay-icon" style="background:rgba(45,212,191,.16);color:var(--teal)">F</div>
+            <div class="pay-info">
+              <div class="pay-name">Fintech App</div>
+              <div class="pay-sub">Pay via UPI</div>
+            </div>
+            <div class="pay-radio"></div>
+          </div>
+        </div>
+        <div class="compact-stats">
+          <div class="cs"><div class="csv" data-count="5.6" data-sfx="M">0</div><div class="csl">Customers adopted with limited marketing</div></div>
+          <div class="cs"><div class="csv" data-count="4.7" data-sfx="+">0</div><div class="csl">App store rating on Android and iOS</div></div>
+          <div class="cs"><div class="csv" data-count="35" data-sfx="%">0</div><div class="csl">Of users were new-to-bank customers</div></div>
+        </div>
+        <a href="#" class="proof-cta">Explore more →</a>
+      </div>
+    </div>
+
+    <div class="proof-footer rv">
+      <div>
+        <div class="award"><span class="award-dot"></span>Celent Model Bank 2024, Payments Innovation</div>
+        <span class="footer-tagline">A methodology built around delivery, not just design.</span>
+      </div>
+      <a href="#" class="footer-cta">Read the full case study →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── PLATFORMS ── -->
+<section class="s-platforms s-pad" id="platforms">
+  <div class="c">
+    <div class="rv" style="margin-bottom:52px">
+      <span class="kicker">Platform IP</span>
+      <h2 class="sec-title">Our <em>core</em> platforms.</h2>
+      <p class="sec-sub">Three purpose-built platforms forming the foundation of everything we deliver. Not licensed middleware — our own IP, engineered from first principles.</p>
+    </div>
+
+    <div class="platforms-grid">
+      <div class="plat-card rv d1">
+        <div class="plat-orb"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+        <div class="plat-name">Tachyon</div>
+        <div class="plat-sub">Transaction Processing Engine</div>
+        <p class="plat-desc">Cloud-native, real-time processing built for velocity, variability, and volume. Designed from first principles — not adapted from legacy.</p>
+        <div class="plat-caps">
+          <div class="plat-cap"><span class="cap-dot"></span>Sub-100ms response on every consumer action</div>
+          <div class="plat-cap"><span class="cap-dot"></span>Configurable reward and offer logic at transaction time</div>
+          <div class="plat-cap"><span class="cap-dot"></span>Multi-tenancy for co-brand and white-label programs</div>
+        </div>
+        <a href="#" class="plat-link">Learn about Tachyon →</a>
+      </div>
+
+      <div class="plat-card rv d2">
+        <div class="plat-orb"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <div class="plat-name">Cipher</div>
+        <div class="plat-sub">Identity, Security &amp; Compliance</div>
+        <p class="plat-desc">A unified security layer abstracting regulatory complexity — PCI-DSS, RBI, and beyond — without bespoke engineering for each market.</p>
+        <div class="plat-caps">
+          <div class="plat-cap"><span class="cap-dot"></span>KYC, KYB, and AML built in</div>
+          <div class="plat-cap"><span class="cap-dot"></span>Multi-market regulatory framework</div>
+          <div class="plat-cap"><span class="cap-dot"></span>Fraud detection and tokenisation</div>
+        </div>
+        <a href="#" class="plat-link">Learn about Cipher →</a>
+      </div>
+
+      <div class="plat-card rv d3">
+        <div class="plat-orb"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg></div>
+        <div class="plat-name">Neutrino</div>
+        <div class="plat-sub">Digital Engagement Platform</div>
+        <p class="plat-desc">An omni-channel digital experience layer with a unified intelligence foundation and its own knowledge ontology — enabling personalised, context-aware banking across every touchpoint.</p>
+        <div class="plat-caps">
+          <div class="plat-cap"><span class="cap-dot"></span>Omni-channel digital experiences</div>
+          <div class="plat-cap"><span class="cap-dot"></span>Common intelligence layer and knowledge ontology</div>
+          <div class="plat-cap"><span class="cap-dot"></span>Personalised, context-aware banking</div>
+        </div>
+        <a href="#" class="plat-link">Learn about Neutrino →</a>
+      </div>
+    </div>
+
+    <div class="cert-strip rv">
+      <span class="cert-strip-label">Certified &amp; Compliant</span>
+      <div class="cert-chips">
+        <span class="cert-chip">PCI-DSS L1</span>
+        <span class="cert-chip">ISO 27001</span>
+        <span class="cert-chip">SOC 2 Type II</span>
+        <span class="cert-chip">RBI</span>
+        <span class="cert-chip">FIDO2</span>
+        <span class="cert-chip">NPCI</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TECH STRENGTH ── -->
+<section class="s-tech s-pad">
+  <div class="c">
+    <div class="tech-head rv">
+      <span class="kicker" style="justify-content:center">Platform strength</span>
+      <h2 class="sec-title">A platform built for the high-scale<br>demands of <em>modern banking.</em></h2>
+      <p class="sec-sub">Every architectural decision was made against a single benchmark: can it serve a major bank's entire customer base, at full load, without compromise?</p>
+    </div>
+
+    <div class="tech-stats-strip rv">
+      <div class="tech-stat-cell"><div class="sv"><span data-count="25">0</span><em>M+</em></div><div class="sl">Cards live in production</div></div>
+      <div class="tech-stat-cell"><div class="sv"><span data-count="1">0</span><em>M+</em></div><div class="sl">Transactions per second, peak</div></div>
+      <div class="tech-stat-cell"><div class="sv"><span data-count="60">0</span><em>M+</em></div><div class="sl">Contracted accounts</div></div>
+      <div class="tech-stat-cell"><div class="sv">&lt;<span data-count="100">0</span><em>ms</em></div><div class="sl">Response time, every action</div></div>
+      <div class="tech-stat-cell"><div class="sv"><span data-count="800">0</span><em>M+</em></div><div class="sl">MFA authentications</div></div>
+      <div class="tech-stat-cell"><div class="sv"><span data-count="10">0</span><em>yr</em></div><div class="sl">In production at scale</div></div>
+    </div>
+
+    <div class="tech-bento">
+      <div class="tb tb-w5 rv d1">
+        <div class="tb-bar bar-p"></div>
+        <div class="tb-icon">☁️</div>
+        <h3>Cloud-native from first principles</h3>
+        <p>Not a legacy system rehosted on cloud — built cloud-native from the ground up. Elastic scale, zero scheduled downtime, continuous feature delivery. Deploy on AWS, Azure, or GCP with a PaaS layer for multi-tenancy, observability, and identity management.</p>
+      </div>
+
+      <div class="tb tb-w3 tb-stat-purple tb-flex rv d2">
+        <div class="tb-big-stat">&lt;100<em>ms</em></div>
+        <div class="tb-sub-stat">Response time on every consumer action. An architectural guarantee, not a target.</div>
+      </div>
+
+      <div class="tb tb-w4 rv d3">
+        <div class="tb-bar bar-t"></div>
+        <div class="tb-icon">🔐</div>
+        <h3>Security designed in, not bolted on</h3>
+        <p>Zero Trust Security governs every layer — continuous verification, encryption at rest and in transit, network segmentation. 800M+ MFA authentications. No reported breach incidents.</p>
+        <div class="cert-pills">
+          <span class="cert-pill"><span class="cert-pill-dot"></span>PCI-DSS L1</span>
+          <span class="cert-pill"><span class="cert-pill-dot"></span>ISO 27001</span>
+          <span class="cert-pill"><span class="cert-pill-dot"></span>RBI</span>
+          <span class="cert-pill"><span class="cert-pill-dot"></span>FIDO2</span>
+        </div>
+      </div>
+
+      <div class="tb tb-w3 tb-stat-teal tb-flex rv d1">
+        <div class="tb-big-stat">1M<em>+</em></div>
+        <div class="tb-sub-stat">Transactions per second at peak. Designed for India-scale from day one.</div>
+      </div>
+
+      <div class="tb tb-w5 rv d2">
+        <div class="tb-bar bar-c"></div>
+        <div class="tb-icon">🧩</div>
+        <h3>Adopt on your terms</h3>
+        <p>15+ independently deployable modular components. Add the card management module. Run the UPI switch in parallel. Expand into lending when ready. No big bang — and no disruption to what already works.</p>
+      </div>
+
+      <div class="tb tb-w4 rv d3">
+        <div class="tb-icon">🔗</div>
+        <h3>Certified across global networks</h3>
+        <p>Certified with NPCI, Mastercard, Visa, and RuPay. Proven in regulated markets across India, US, Southeast Asia, and beyond.</p>
+        <div class="cert-pills">
+          <span class="cert-pill">NPCI</span>
+          <span class="cert-pill">Mastercard</span>
+          <span class="cert-pill">Visa</span>
+          <span class="cert-pill">RuPay</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── INSIGHTS ── -->
+<section class="s-insights s-pad" id="insights">
+  <div class="c">
+    <div class="ins-head rv">
+      <div>
+        <span class="kicker">Thought Leadership</span>
+        <h2 class="sec-title" style="font-size:34px">What we're <em>thinking</em> about.</h2>
+      </div>
+      <a href="#" class="ins-link">All insights →</a>
+    </div>
+    <div class="ins-grid">
+      <a href="#" class="ins-card rv d1">
+        <span class="ins-tag">White Paper</span>
+        <div class="ins-title">Shattering the Co-Brand Glass Ceiling</div>
+        <div class="ins-sub">15 strategic plays for co-brand program success — and why legacy architecture is the real ceiling.</div>
+        <span class="ins-cta">Read the paper →</span>
+      </a>
+      <a href="#" class="ins-card rv d2">
+        <span class="ins-tag">eBook</span>
+        <div class="ins-title">Reimagining UPI for Banks: 10 Winning Ideas</div>
+        <div class="ins-sub">A product-led guide for banks to capture the next wave of UPI growth.</div>
+        <span class="ins-cta">Download the guide →</span>
+      </a>
+      <a href="#" class="ins-card rv d3">
+        <span class="ins-tag">White Paper</span>
+        <div class="ins-title">The $1 Trillion Credit Line on UPI Opportunity</div>
+        <div class="ins-sub">A definitive launch playbook for banks ready to move from pilot to scale.</div>
+        <span class="ins-cta">Get the playbook →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="s-cta s-pad" id="cta">
+  <div class="c">
+    <div class="cta-inner rv">
+      <h2>Tell us the problem.<br>We'll show you what's <span class="gradient-text">possible.</span></h2>
+      <p>We don't do generic demos. Every conversation starts with the specific outcome you're trying to achieve.</p>
+      <div class="cta-actions">
+        <a href="#" class="btn-p">Talk to our team →</a>
+        <a href="#proof" class="btn-g">See our work first</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="c">
+    <div class="foot-top">
+      <div>
+        <div class="foot-logo">zeta</div>
+        <div class="foot-tagline">Banking technology that solves the problems others won't take on.</div>
+      </div>
+      <div>
+        <div class="foot-col-title">Platforms</div>
+        <ul class="foot-links"><li><a href="#">Tachyon</a></li><li><a href="#">Cipher</a></li><li><a href="#">Neutrino</a></li></ul>
+      </div>
+      <div>
+        <div class="foot-col-title">Solutions</div>
+        <ul class="foot-links"><li><a href="#">Card Modernization</a></li><li><a href="#">Co-branded Cards</a></li><li><a href="#">Credit Line on UPI</a></li><li><a href="#">Digital Banking</a></li><li><a href="#">Employee Benefits</a></li></ul>
+      </div>
+      <div>
+        <div class="foot-col-title">Company</div>
+        <ul class="foot-links"><li><a href="#">Our Work</a></li><li><a href="#">Insights</a></li><li><a href="#">Manifesto</a></li><li><a href="#">Careers</a></li><li><a href="#">Trust Centre</a></li></ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-copy">© 2026 Better World Technology Pvt. Ltd.</div>
+      <div class="foot-certs">
+        <span class="foot-cert">PCI-DSS L1</span>
+        <span class="foot-cert">ISO 27001</span>
+        <span class="foot-cert">SOC 2 Type II</span>
+        <span class="foot-cert">RBI</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</div><!-- /.page -->
+
+<script>
+(function(){
+  'use strict';
+
+  /* ── PRELOADER ── */
+  var loader = document.getElementById('loader');
+  var bar = document.getElementById('loaderBar');
+  var pct = document.getElementById('loaderPct');
+  var p = 0;
+  var tick = setInterval(function(){
+    p += Math.random() * 16 + 6;
+    if(p >= 100){ p = 100; clearInterval(tick); finish(); }
+    bar.style.width = p + '%';
+    pct.textContent = Math.floor(p) + '%';
+  }, 130);
+
+  function finish(){
+    setTimeout(function(){
+      loader.classList.add('done');
+      document.body.classList.remove('loading');
+      // start hero reveal immediately
+      revealNow();
+    }, 350);
+  }
+
+  /* ── SCROLL REVEAL ── */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.classList.add('on');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  var revealEls = document.querySelectorAll('.rv');
+  function revealNow(){
+    revealEls.forEach(function(el){ io.observe(el); });
+  }
+
+  /* ── NAV SCROLL STATE ── */
+  var nav = document.getElementById('nav');
+  function onScroll(){
+    if(window.scrollY > 30) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+
+  /* ── COUNT-UP STATS ── */
+  function animateCount(el){
+    var target = parseFloat(el.getAttribute('data-count'));
+    var sfx = el.getAttribute('data-sfx') || '';
+    var decimals = (target % 1 !== 0) ? 1 : 0;
+    var dur = 1600, start = null;
+    function step(ts){
+      if(!start) start = ts;
+      var t = Math.min((ts - start) / dur, 1);
+      var eased = 1 - Math.pow(1 - t, 3); // easeOutCubic
+      var val = (target * eased).toFixed(decimals);
+      el.textContent = val + sfx;
+      if(t < 1) requestAnimationFrame(step);
+      else el.textContent = target.toFixed(decimals) + sfx;
+    }
+    requestAnimationFrame(step);
+  }
+  var countIO = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        animateCount(e.target);
+        countIO.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.6 });
+  document.querySelectorAll('[data-count]').forEach(function(el){ countIO.observe(el); });
+
+  /* ── CARD HOVER GLOW (follow cursor) ── */
+  var glowCards = document.querySelectorAll('.plat-card, .stmt, .tb, .ins-card');
+  glowCards.forEach(function(card){
+    card.addEventListener('mousemove', function(e){
+      var r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+      card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+    });
+  });
+
+  /* ── MAGNETIC BUTTONS ── */
+  if(window.matchMedia('(pointer:fine)').matches){
+    document.querySelectorAll('.btn-p, .nav-cta').forEach(function(btn){
+      btn.addEventListener('mousemove', function(e){
+        var r = btn.getBoundingClientRect();
+        var x = e.clientX - r.left - r.width/2;
+        var y = e.clientY - r.top - r.height/2;
+        btn.style.transform = 'translate('+(x*0.18)+'px,'+(y*0.28-2)+'px)';
+      });
+      btn.addEventListener('mouseleave', function(){ btn.style.transform = ''; });
+    });
+  }
+
+  /* ── HERO PARALLAX ON ORBS ── */
+  var orbs = document.querySelectorAll('.orb');
+  window.addEventListener('scroll', function(){
+    var y = window.scrollY;
+    orbs.forEach(function(orb, i){
+      orb.style.transform = 'translateY(' + (y * (0.06 + i*0.03)) + 'px)';
+    });
+  }, { passive:true });
+
+  /* safety: reveal everything if loader stalls */
+  window.addEventListener('load', function(){
+    setTimeout(function(){
+      if(document.body.classList.contains('loading')){
+        loader.classList.add('done');
+        document.body.classList.remove('loading');
+        revealNow();
+      }
+    }, 2500);
+  });
+})();
+</script>
+</body>
+</html>
