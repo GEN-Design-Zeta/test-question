@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zeta — Banking Infrastructure, Engineered</title>
+<meta name="description" content="Zeta builds and scales the banking technology others won't take on — three proprietary cloud-native platforms, practitioners who've run programmes inside banks, and a methodology that goes live on schedule.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* ── DARK + WHITE + LAVENDER ── */
+  --bg:#08070D;
+  --bg-2:#0B0A12;
+  --bg-3:#100E1A;
+  --glass:rgba(255,255,255,.035);
+  --glass-2:rgba(255,255,255,.055);
+
+  --lav:#C8B8F5;
+  --lav-bright:#DED2FF;
+  --lav-soft:#A99BE0;
+  --violet:#8A6BF0;
+  --violet-deep:#6A4BD6;
+  --grad:linear-gradient(135deg,#E2D7FF 0%,#A98CF2 55%,#7C5CE8 100%);
+  --grad-line:linear-gradient(120deg,rgba(222,210,255,.5),rgba(138,107,240,.05) 60%);
+
+  --white:#F6F4FC;
+  --t1:#E9E6F4;
+  --t2:#A6A0BE;
+  --t3:#6F6989;
+  --t4:#474259;
+
+  --line:rgba(200,184,245,.12);
+  --line-2:rgba(200,184,245,.22);
+  --glow:rgba(138,107,240,.5);
+
+  --fb:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif;
+  --fm:'JetBrains Mono',ui-monospace,monospace;
+  --max:1220px;
+  --gut:40px;
+  --r:18px;
+  --ease:cubic-bezier(.22,.68,.28,1);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--fb);background:var(--bg);color:var(--t1);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;font-weight:400}
+body.lock{overflow:hidden;height:100vh}
+a{color:inherit;text-decoration:none}
+::selection{background:rgba(138,107,240,.4);color:#fff}
+:focus-visible{outline:2px solid var(--lav);outline-offset:3px;border-radius:4px}
+.c{max-width:var(--max);margin:0 auto;padding:0 var(--gut)}
+svg{display:block}
+
+.grad-t{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* ════ PRELOADER ════ */
+.loader{position:fixed;inset:0;z-index:3000;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;transition:opacity .8s var(--ease),visibility .8s}
+.loader.done{opacity:0;visibility:hidden}
+.loader-ring{width:64px;height:64px;position:relative}
+.loader-ring svg{width:100%;height:100%;animation:spin 1.1s linear infinite}
+.loader-ring circle{fill:none;stroke-width:3;stroke-linecap:round}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loader-logo{font-size:26px;font-weight:700;letter-spacing:-.5px;color:var(--white);display:flex;align-items:center}
+.loader-logo .d{width:7px;height:7px;border-radius:50%;background:var(--lav);margin-left:3px;box-shadow:0 0 14px var(--lav)}
+.loader-pct{font-family:var(--fm);font-size:11px;letter-spacing:3px;color:var(--t3)}
+
+/* ════ PROGRESS ════ */
+.progress{position:fixed;top:0;left:0;height:2px;width:0;z-index:400;background:var(--grad);box-shadow:0 0 12px var(--glow)}
+
+/* ════ AMBIENT ════ */
+.grain{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.04;mix-blend-mode:screen;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.wrap{position:relative;z-index:1}
+
+/* ════ NAV ════ */
+.nav{position:fixed;top:0;left:0;right:0;z-index:200;transition:background .4s,border-color .4s,height .4s;border-bottom:1px solid transparent}
+.nav.solid{background:rgba(8,7,13,.7);backdrop-filter:blur(18px) saturate(150%);border-color:var(--line)}
+.nav-row{display:flex;align-items:center;height:74px;gap:40px}
+.logo{font-size:24px;font-weight:700;letter-spacing:-.5px;color:var(--white);display:flex;align-items:center}
+.logo .d{width:7px;height:7px;border-radius:50%;background:var(--lav);margin-left:3px;box-shadow:0 0 12px var(--lav)}
+.nav.mega-active{background:rgba(8,7,13,.82);backdrop-filter:blur(18px) saturate(150%);border-color:var(--line)}
+.nav-links{display:flex;gap:4px;align-items:center}
+.nav-trigger{display:inline-flex;align-items:center;gap:7px;font-family:inherit;font-size:14px;font-weight:500;color:var(--t2);background:none;border:none;cursor:pointer;padding:9px 13px;border-radius:9px;transition:color .2s,background .2s}
+.nav-trigger .chev{width:8px;height:8px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translate(-1px,-1px);opacity:.6;transition:transform .3s var(--ease),opacity .2s}
+.nav-trigger:hover{color:var(--white)}
+.nav-trigger.active{color:var(--white);background:var(--glass)}
+.nav-trigger.active .chev{transform:rotate(225deg) translate(-1px,-1px);opacity:1}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:18px}
+.nav-ghost{font-size:14.5px;font-weight:600;color:var(--t1);transition:color .2s}
+.nav-ghost:hover{color:var(--lav)}
+
+/* ── MEGA MENU ── */
+.mega{position:absolute;top:100%;left:0;right:0;opacity:0;visibility:hidden;transform:translateY(10px);transition:opacity .32s var(--ease),transform .32s var(--ease),visibility .32s}
+.mega.open{opacity:1;visibility:visible;transform:none}
+.mega-bg{background:rgba(11,10,18,.94);backdrop-filter:blur(24px) saturate(150%);border-top:1px solid var(--line);border-bottom:1px solid var(--line);box-shadow:0 50px 90px -34px rgba(0,0,0,.85),inset 0 1px 0 rgba(255,255,255,.04)}
+.mega-panel{display:none;padding:42px 0 46px}
+.mega-panel.show{display:block;animation:megaIn .38s var(--ease)}
+@keyframes megaIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.mega-inner{display:flex;gap:48px;align-items:flex-start}
+.mega-cols{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:36px}
+.mega-cols.cols-4{grid-template-columns:repeat(4,1fr)}
+.mega-cols.cols-2{grid-template-columns:repeat(2,1fr);max-width:560px}
+.mcol{min-width:0}
+.mcol-h{font-family:var(--fm);font-size:10.5px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--lav);margin-bottom:14px;padding-bottom:11px;border-bottom:1px solid var(--line)}
+.mitem{display:block;font-size:14px;color:var(--t2);padding:8px 0;transition:color .2s,transform .25s var(--ease)}
+.mitem:hover{color:var(--white);transform:translateX(5px)}
+.mlead{display:block;font-size:14px;font-weight:600;color:var(--t1);padding:8px 0 6px;transition:color .2s,transform .25s var(--ease)}
+.mlead:hover{color:var(--lav);transform:translateX(5px)}
+.mgroup{margin-bottom:14px}
+.msub{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--t3);padding:5px 0 5px 2px;transition:color .2s,transform .25s var(--ease)}
+.msub::before{content:'';width:9px;height:1px;background:var(--t4);flex-shrink:0}
+.msub:hover{color:var(--lav);transform:translateX(4px)}
+.msub:hover::before{background:var(--lav)}
+.mitem-rich{display:block;padding:11px 0;transition:transform .25s var(--ease)}
+.mitem-rich b{display:block;font-size:14px;font-weight:600;color:var(--t1);margin-bottom:3px;transition:color .2s}
+.mitem-rich span{display:block;font-size:12.5px;color:var(--t3);line-height:1.5}
+.mitem-rich:hover{transform:translateX(4px)}
+.mitem-rich:hover b{color:var(--lav)}
+.mega-feature{flex:0 0 264px;position:relative;display:block;padding:24px;border-radius:14px;overflow:hidden;background:linear-gradient(165deg,rgba(138,107,240,.18),rgba(255,255,255,.02));border:1px solid var(--line-2);transition:transform .35s var(--ease),box-shadow .35s}
+.mega-feature:hover{transform:translateY(-3px);box-shadow:0 24px 50px -28px var(--glow)}
+.mf-ic{width:42px;height:42px;border-radius:11px;display:grid;place-items:center;background:rgba(255,255,255,.06);border:1px solid var(--line-2);color:var(--lav-bright);margin-bottom:18px}
+.mf-t{font-size:17px;font-weight:700;color:var(--white);letter-spacing:-.3px;line-height:1.25;margin-bottom:10px}
+.mf-d{font-size:13px;color:var(--t2);line-height:1.6;margin-bottom:16px}
+.mf-l{font-size:13px;font-weight:600;color:var(--lav)}
+
+/* ── BURGER + MOBILE NAV ── */
+.burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:40px;height:40px;background:var(--glass);border:1px solid var(--line-2);border-radius:10px;cursor:pointer;padding:0 10px}
+.burger span{display:block;height:2px;background:var(--t1);border-radius:2px;transition:transform .3s var(--ease),opacity .2s}
+.burger.on span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger.on span:nth-child(2){opacity:0}
+.burger.on span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mnav{position:fixed;inset:0;z-index:250;background:var(--bg);transform:translateX(100%);transition:transform .4s var(--ease);display:flex;flex-direction:column;overflow:hidden}
+.mnav.open{transform:none}
+.mnav-head{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--line);flex-shrink:0}
+.mnav-close{background:var(--glass);border:1px solid var(--line-2);color:var(--t1);width:40px;height:40px;border-radius:10px;font-size:16px;cursor:pointer}
+.mnav-body{flex:1;overflow-y:auto;padding:8px 22px}
+.mnav details{border-bottom:1px solid var(--line)}
+.mnav summary{list-style:none;cursor:pointer;font-size:18px;font-weight:600;color:var(--white);padding:18px 4px;display:flex;align-items:center;justify-content:space-between}
+.mnav summary::-webkit-details-marker{display:none}
+.mnav summary::after{content:'+';font-size:22px;font-weight:400;color:var(--lav)}
+.mnav details[open] summary::after{content:'–'}
+.msec{display:flex;flex-direction:column;padding:4px 0 18px}
+.msec-h{font-family:var(--fm);font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--lav);margin:14px 0 6px}
+.msec a{font-size:15px;color:var(--t2);padding:9px 0;transition:color .2s}
+.msec a:hover{color:var(--white)}
+.msec a.ind{padding-left:16px;font-size:14px;color:var(--t3)}
+.mnav-foot{flex-shrink:0;display:flex;align-items:center;gap:16px;padding:18px 22px;border-top:1px solid var(--line)}
+.mnav-foot .btn{flex:1;justify-content:center}
+
+/* ════ BUTTONS ════ */
+.btn{display:inline-flex;align-items:center;gap:9px;font-size:14.5px;font-weight:600;padding:13px 24px;border-radius:11px;transition:transform .25s var(--ease),box-shadow .25s,background .25s,border-color .25s,color .25s;white-space:nowrap}
+.btn-p{position:relative;color:#160F2B;background:var(--grad);box-shadow:0 10px 30px -10px var(--glow)}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 16px 40px -10px var(--glow)}
+.btn-g{color:var(--t1);background:var(--glass);border:1px solid var(--line-2);backdrop-filter:blur(8px)}
+.btn-g:hover{border-color:var(--lav);color:var(--white);transform:translateY(-2px);background:var(--glass-2)}
+.btn-sm{padding:10px 20px;font-size:14px}
+.btn .ar{transition:transform .25s var(--ease)}
+.btn:hover .ar{transform:translateX(3px)}
+
+/* ════ HERO ════ */
+.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:130px 0 60px;overflow:hidden}
+#net{position:absolute;inset:0;z-index:0;width:100%;height:100%}
+.aurora{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.aurora .blob{position:absolute;border-radius:50%;filter:blur(100px)}
+.aurora .b1{width:620px;height:620px;top:-200px;left:-120px;background:radial-gradient(circle,rgba(138,107,240,.5),transparent 65%);animation:drift 24s ease-in-out infinite}
+.aurora .b2{width:520px;height:520px;top:10%;right:-160px;background:radial-gradient(circle,rgba(200,184,245,.32),transparent 65%);animation:drift 28s ease-in-out infinite reverse}
+.aurora .b3{width:440px;height:440px;bottom:-180px;left:35%;background:radial-gradient(circle,rgba(106,75,214,.4),transparent 68%);animation:drift 30s ease-in-out infinite}
+@keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(70px,50px)}}
+.hero-grid{position:absolute;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(200,184,245,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(200,184,245,.045) 1px,transparent 1px);background-size:60px 60px;-webkit-mask-image:radial-gradient(ellipse 70% 55% at 50% 35%,#000,transparent 78%);mask-image:radial-gradient(ellipse 70% 55% at 50% 35%,#000,transparent 78%)}
+.hero-inner{position:relative;z-index:2;text-align:center}
+.hero-badge{display:inline-flex;align-items:center;gap:9px;background:var(--glass);border:1px solid var(--line-2);backdrop-filter:blur(10px);padding:7px 16px 7px 8px;border-radius:100px;font-size:12.5px;font-weight:500;color:var(--lav);margin-bottom:30px}
+.hero-badge .tag{font-family:var(--fm);font-size:10px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;background:rgba(138,107,240,.2);color:var(--lav-bright);padding:3px 9px;border-radius:100px}
+.hero h1{font-size:clamp(44px,7vw,86px);font-weight:700;line-height:1.02;letter-spacing:-2.5px;color:var(--white);max-width:16ch;margin:0 auto 26px}
+.hero-sub{font-size:19px;color:var(--t2);max-width:580px;margin:0 auto 38px;line-height:1.6}
+.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
+.hero-trust{font-family:var(--fm);font-size:11.5px;letter-spacing:.5px;color:var(--t3);text-transform:uppercase}
+
+/* ════ HERO CONSOLE ════ */
+.console{position:relative;z-index:2;max-width:1020px;margin:64px auto 0;border-radius:20px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border:1px solid var(--line-2);box-shadow:0 50px 120px -40px rgba(0,0,0,.9),0 0 80px -40px var(--glow),inset 0 1px 0 rgba(255,255,255,.07);backdrop-filter:blur(20px);overflow:hidden}
+.console-bar{display:flex;align-items:center;gap:9px;padding:14px 18px;border-bottom:1px solid var(--line)}
+.console-bar .dots{display:flex;gap:6px}.console-bar .dots i{width:11px;height:11px;border-radius:50%;background:rgba(255,255,255,.12)}
+.console-bar .ttl{font-family:var(--fm);font-size:12px;color:var(--t3);margin-left:8px}
+.console-bar .live{margin-left:auto;font-family:var(--fm);font-size:11px;color:#5BD6A0;display:flex;align-items:center;gap:7px}
+.console-bar .live .lv{width:7px;height:7px;border-radius:50%;background:#5BD6A0;box-shadow:0 0 8px #5BD6A0;animation:blink 1.4s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.console-body{display:grid;grid-template-columns:200px 1fr;min-height:300px}
+.console-side{border-right:1px solid var(--line);padding:18px 14px}
+.cs-lab{font-family:var(--fm);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--t3);padding:0 8px;margin-bottom:12px}
+.cs-item{display:flex;align-items:center;gap:11px;padding:11px 12px;border-radius:10px;font-size:13.5px;font-weight:500;color:var(--t2);margin-bottom:3px;cursor:default;transition:background .25s,color .25s}
+.cs-item .ci{width:8px;height:8px;border-radius:2px}
+.cs-item.on{background:rgba(138,107,240,.14);color:var(--white)}
+.console-main{padding:22px}
+.cm-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
+.cm-kpi{background:rgba(255,255,255,.025);border:1px solid var(--line);border-radius:13px;padding:15px}
+.cm-kpi .l{font-family:var(--fm);font-size:10px;letter-spacing:.3px;text-transform:uppercase;color:var(--t3);margin-bottom:9px}
+.cm-kpi .v{font-size:25px;font-weight:700;letter-spacing:-1px;color:var(--white)}
+.cm-kpi .v em{font-style:normal;font-size:14px;color:var(--lav)}
+.cm-chart{background:rgba(255,255,255,.025);border:1px solid var(--line);border-radius:13px;padding:18px}
+.cm-chart .ch{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
+.cm-chart .ch b{font-size:14px;font-weight:600;color:var(--t1)}
+.cm-chart .ch span{font-family:var(--fm);font-size:11px;color:#5BD6A0}
+.cm-chart .cl{font-size:12px;color:var(--t3);margin-bottom:12px}
+
+/* ════ LOGO STRIP ════ */
+.strip{padding:46px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg-2)}
+.strip-lab{text-align:center;font-family:var(--fm);font-size:11.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);margin-bottom:26px}
+.strip-row{display:flex;justify-content:center;align-items:center;gap:52px;flex-wrap:wrap}
+.strip-row span{font-size:19px;font-weight:600;color:var(--t3);letter-spacing:-.3px;transition:color .25s}
+.strip-row span:hover{color:var(--lav)}
+
+/* ════ SECTION ════ */
+.sec{padding:120px 0;position:relative}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:var(--fm);font-size:12px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--lav);margin-bottom:18px}
+.eyebrow::before{content:'';width:24px;height:1px;background:var(--lav);opacity:.6}
+.h2{font-size:clamp(32px,4.4vw,52px);font-weight:700;letter-spacing:-1.5px;line-height:1.06;color:var(--white)}
+.h2 em{font-style:normal;color:transparent;background:var(--grad);-webkit-background-clip:text;background-clip:text}
+.sub{font-size:17px;color:var(--t2);margin-top:18px;line-height:1.6;max-width:560px}
+.sec-head{max-width:680px;margin-bottom:60px}
+.sec-head.center{margin-left:auto;margin-right:auto;text-align:center}
+.sec-head.center .eyebrow{justify-content:center}.sec-head.center .sub{margin-left:auto;margin-right:auto}
+
+/* glass card base */
+.glass{position:relative;background:var(--glass);border:1px solid var(--line);border-radius:var(--r);backdrop-filter:blur(10px);overflow:hidden;transition:transform .4s var(--ease),border-color .4s,box-shadow .4s}
+.glass::before{content:'';position:absolute;inset:0;border-radius:inherit;padding:1px;background:var(--grad-line);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .4s}
+.glass:hover{transform:translateY(-6px);box-shadow:0 30px 60px -34px rgba(0,0,0,.9),0 0 50px -30px var(--glow)}
+.glass:hover::before{opacity:1}
+
+/* ════ APPROACH ════ */
+.appr-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.appr{padding:32px}
+.appr-ic{width:50px;height:50px;border-radius:14px;display:grid;place-items:center;margin-bottom:22px;background:rgba(138,107,240,.14);border:1px solid var(--line-2);color:var(--lav-bright)}
+.appr-no{font-family:var(--fm);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--t3);margin-bottom:10px}
+.appr h3{font-size:21px;font-weight:700;letter-spacing:-.5px;color:var(--white);margin-bottom:11px}
+.appr p{font-size:14.5px;color:var(--t2);line-height:1.65;margin-bottom:24px}
+.appr-stat{padding-top:20px;border-top:1px solid var(--line)}
+.appr-stat b{font-size:34px;font-weight:700;letter-spacing:-1px;display:block;line-height:1;color:var(--white)}
+.appr-stat span{font-size:12.5px;color:var(--t3);display:block;margin-top:7px}
+
+/* ════ PLATFORMS ════ */
+.s-plat{background:var(--bg-2);border-top:1px solid var(--line)}
+.plat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.plat{padding:34px 30px;display:flex;flex-direction:column}
+.plat-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+.plat-ic{width:48px;height:48px;border-radius:13px;display:grid;place-items:center;background:rgba(255,255,255,.03);border:1px solid var(--line-2);color:var(--lav-bright);transition:transform .4s var(--ease)}
+.plat:hover .plat-ic{transform:translateY(-3px) scale(1.04)}
+.plat-tag{font-family:var(--fm);font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:var(--t3);border:1px solid var(--line);border-radius:100px;padding:5px 11px}
+.plat-name{font-size:26px;font-weight:700;letter-spacing:-.6px;color:var(--white);margin-bottom:4px}
+.plat-role{font-family:var(--fm);font-size:11px;letter-spacing:.5px;text-transform:uppercase;color:var(--lav);margin-bottom:16px}
+.plat-desc{font-size:14.5px;color:var(--t2);line-height:1.65;margin-bottom:22px}
+.plat-caps{list-style:none;margin-bottom:24px;flex:1}
+.plat-caps li{font-size:13.5px;color:var(--t2);padding:10px 0 10px 20px;border-top:1px solid var(--line);position:relative;line-height:1.5}
+.plat-caps li::before{content:'';position:absolute;left:0;top:17px;width:7px;height:7px;border-radius:50%;background:var(--lav);box-shadow:0 0 8px var(--glow)}
+.plat-link{font-size:14px;font-weight:600;color:var(--lav);display:inline-flex;gap:8px;transition:gap .25s var(--ease)}
+.plat-link:hover{gap:13px}
+
+/* ════ CASE ════ */
+.s-case{border-top:1px solid var(--line);position:relative;overflow:hidden}
+.s-case::before{content:'';position:absolute;top:10%;left:-10%;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(138,107,240,.18),transparent 65%);filter:blur(80px);pointer-events:none}
+.case-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;position:relative}
+.case-tags{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:24px}
+.case-tags .tg{font-family:var(--fm);font-size:11px;color:var(--t2);background:var(--glass);border:1px solid var(--line);border-radius:100px;padding:6px 13px}
+.case-tags .tg.gold{color:#E3C06A;border-color:rgba(227,192,106,.3)}
+.case-grid h2{font-size:clamp(28px,3.8vw,46px);font-weight:700;letter-spacing:-1.5px;line-height:1.1;color:var(--white);margin-bottom:24px}
+.case-grid h2 em{font-style:normal;color:transparent;background:var(--grad);-webkit-background-clip:text;background-clip:text}
+.case-95{display:flex;align-items:baseline;gap:8px;margin-bottom:14px}
+.case-95 b{font-size:82px;font-weight:800;letter-spacing:-4px;line-height:.9;color:transparent;background:var(--grad);-webkit-background-clip:text;background-clip:text}
+.case-95 i{font-size:32px;font-weight:700;font-style:normal;color:var(--lav)}
+.case-p{font-size:15.5px;color:var(--t2);line-height:1.7;max-width:440px}
+.case-p strong{color:var(--white);font-weight:600}
+.pay{padding:22px;margin-bottom:20px}
+.pay-h{font-family:var(--fm);font-size:11px;letter-spacing:.5px;text-transform:uppercase;color:var(--t3);margin-bottom:16px}
+.pay-opt{display:flex;align-items:center;gap:14px;padding:15px;border:1px solid var(--line);border-radius:13px;margin-bottom:10px;transition:all .25s}
+.pay-opt.on{border-color:var(--line-2);background:rgba(138,107,240,.1)}
+.pay-ic{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;font-weight:700;font-size:16px;flex-shrink:0}
+.pay-opt.on .pay-ic{background:var(--grad);color:#160F2B}
+.pay-opt:not(.on) .pay-ic{background:rgba(255,255,255,.05);color:var(--t2)}
+.pay-info{flex:1}
+.pay-name{font-size:14px;font-weight:600;color:var(--white)}
+.pay-sub{font-family:var(--fm);font-size:10.5px;color:var(--t3)}
+.pay-rd{width:19px;height:19px;border-radius:50%;border:2px solid var(--line-2);flex-shrink:0;position:relative}
+.pay-opt.on .pay-rd{border-color:var(--lav)}
+.pay-opt.on .pay-rd::after{content:'';position:absolute;inset:3px;border-radius:50%;background:var(--lav)}
+.case-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.cstat{padding:18px 14px;text-align:center}
+.cstat b{font-size:28px;font-weight:700;letter-spacing:-1px;display:block;line-height:1;color:var(--white)}
+.cstat span{font-size:11px;color:var(--t3);display:block;margin-top:8px;line-height:1.4}
+
+/* ════ INFRA ════ */
+.s-infra{background:var(--bg-2);border-top:1px solid var(--line)}
+.infra-metrics{display:grid;grid-template-columns:repeat(6,1fr);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--glass);margin-bottom:20px}
+.im{padding:28px 20px;border-right:1px solid var(--line);transition:background .3s}
+.im:last-child{border-right:none}
+.im:hover{background:rgba(138,107,240,.08)}
+.im b{font-size:34px;font-weight:700;letter-spacing:-1.5px;display:block;line-height:1;color:var(--white)}
+.im b em{font-style:normal;font-size:15px;color:var(--lav)}
+.im span{font-family:var(--fm);font-size:10px;letter-spacing:.2px;color:var(--t3);display:block;margin-top:11px;line-height:1.5}
+.spec-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.spec{padding:28px 30px;display:flex;gap:20px;align-items:flex-start}
+.spec-no{font-family:var(--fm);font-size:12px;color:var(--lav);padding-top:3px}
+.spec h4{font-size:18px;font-weight:700;color:var(--white);letter-spacing:-.3px;margin-bottom:8px}
+.spec p{font-size:14px;color:var(--t2);line-height:1.6;margin-bottom:14px}
+.spec p strong{color:var(--white);font-weight:600}
+.spec-pills{display:flex;gap:7px;flex-wrap:wrap}
+.spill{font-family:var(--fm);font-size:10.5px;color:var(--t2);border:1px solid var(--line);border-radius:100px;padding:5px 11px}
+
+/* ════ INSIGHTS ════ */
+.ins-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.ins{padding:30px;display:flex;flex-direction:column;min-height:230px}
+.ins-type{align-self:flex-start;font-family:var(--fm);font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--lav);background:rgba(138,107,240,.12);border:1px solid var(--line);border-radius:100px;padding:5px 12px;margin-bottom:20px}
+.ins h3{font-size:19px;font-weight:700;letter-spacing:-.4px;color:var(--white);line-height:1.25;margin-bottom:11px}
+.ins p{font-size:14px;color:var(--t2);line-height:1.6;flex:1}
+.ins-cta{margin-top:18px;font-size:13.5px;font-weight:600;color:var(--lav);display:inline-flex;gap:7px;transition:gap .25s var(--ease)}
+.ins:hover .ins-cta{gap:12px}
+
+/* ════ CTA ════ */
+.s-cta{padding:120px 0}
+.cta-box{position:relative;text-align:center;padding:90px 48px;border-radius:28px;overflow:hidden;background:linear-gradient(180deg,rgba(138,107,240,.16),rgba(255,255,255,.02));border:1px solid var(--line-2);box-shadow:inset 0 1px 0 rgba(255,255,255,.07)}
+.cta-box::before{content:'';position:absolute;top:-40%;left:50%;transform:translateX(-50%);width:700px;height:500px;background:radial-gradient(ellipse,rgba(138,107,240,.4),transparent 65%);filter:blur(70px);pointer-events:none}
+.cta-box h2{position:relative;z-index:1;font-size:clamp(34px,5vw,62px);font-weight:700;letter-spacing:-2px;line-height:1.04;color:var(--white);margin-bottom:20px}
+.cta-box h2 em{font-style:normal;color:transparent;background:var(--grad);-webkit-background-clip:text;background-clip:text}
+.cta-box p{position:relative;z-index:1;font-size:18px;color:var(--t2);max-width:500px;margin:0 auto 34px;line-height:1.55}
+.cta-btns{position:relative;z-index:1;display:flex;gap:13px;justify-content:center;flex-wrap:wrap}
+
+/* ════ FOOTER ════ */
+footer{background:var(--bg-2);border-top:1px solid var(--line);padding:74px 0 36px}
+.foot-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:44px;padding-bottom:48px;border-bottom:1px solid var(--line)}
+.foot-brand .logo{font-size:30px;margin-bottom:16px}
+.foot-brand p{font-size:14.5px;color:var(--t2);line-height:1.65;max-width:280px}
+.fcol h4{font-family:var(--fm);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--t3);margin-bottom:18px}
+.fcol a{display:block;font-size:14px;color:var(--t2);padding:7px 0;transition:color .2s,padding-left .2s}
+.fcol a:hover{color:var(--lav);padding-left:4px}
+.foot-bot{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;padding-top:28px}
+.foot-bot .cp{font-family:var(--fm);font-size:11.5px;color:var(--t3)}
+.foot-certs{display:flex;gap:8px;flex-wrap:wrap}
+.fcert{font-family:var(--fm);font-size:10.5px;color:var(--t3);border:1px solid var(--line);border-radius:100px;padding:5px 11px}
+
+/* ════ LIGHT SECTIONS ════ */
+.ls{
+  background:#F8F7FD;
+  color:#19132A;
+  --bg:#F8F7FD;
+  --bg-2:#F0EEF9;
+  --bg-3:#E8E4F5;
+  --glass:rgba(255,255,255,.9);
+  --glass-2:#fff;
+  --t1:#19132A;
+  --t2:#4B4568;
+  --t3:#8B87A8;
+  --t4:#BDB9D4;
+  --white:#19132A;
+  --line:rgba(100,75,200,.1);
+  --line-2:rgba(100,75,200,.18);
+  --glow:rgba(138,107,240,.2);
+  --lav:#6A4BD6;
+  --lav-bright:#8A6BF0;
+  --lav-soft:#9B87E5;
+  --grad-line:linear-gradient(120deg,rgba(138,107,240,.2),rgba(138,107,240,.03) 60%);
+}
+/* Cards on white need real shadows instead of the dark-mode deep drop */
+.ls .glass{
+  background:#fff;
+  border-color:rgba(100,75,200,.13);
+  box-shadow:0 2px 8px rgba(70,40,180,.05),0 8px 28px rgba(70,40,180,.05);
+}
+.ls .glass:hover{
+  transform:translateY(-6px);
+  box-shadow:0 6px 18px rgba(70,40,180,.1),0 28px 56px rgba(70,40,180,.09);
+  border-color:rgba(138,107,240,.32);
+}
+.ls .glass:hover::before{opacity:.4}
+/* Platform icon needs purple tint to be visible on white */
+.ls .plat-ic{background:rgba(106,75,214,.08);border-color:rgba(106,75,214,.2)}
+/* Unselected payment icon barely shows on white */
+.ls .pay-opt:not(.on) .pay-ic{background:rgba(106,75,214,.07);color:var(--t3)}
+/* Internal dividers */
+.ls .appr-stat{border-top-color:rgba(100,75,200,.12)}
+.ls .plat-caps li{border-top-color:rgba(100,75,200,.1)}
+/* Strip border on light bg */
+.strip.ls{border-top-color:rgba(100,75,200,.1);border-bottom-color:rgba(100,75,200,.1)}
+
+/* ════ REVEAL ════ */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.rv.in{opacity:1;transform:none}
+.s1{transition-delay:.08s}.s2{transition-delay:.16s}.s3{transition-delay:.24s}
+
+/* ════ RESPONSIVE ════ */
+@media(max-width:1060px){
+  .nav-links{display:none}
+  .nav-right .nav-ghost,.nav-right .btn-p{display:none}
+  .burger{display:flex}
+  .mega{display:none}
+}
+@media(max-width:980px){
+  .console-body{grid-template-columns:1fr}
+  .console-side{display:none}
+  .appr-grid,.plat-grid,.ins-grid{grid-template-columns:1fr}
+  .case-grid{grid-template-columns:1fr;gap:44px}
+  .infra-metrics{grid-template-columns:repeat(3,1fr)}.im:nth-child(3n){border-right:none}
+  .spec-grid{grid-template-columns:1fr}
+  .foot-top{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+  :root{--gut:22px}
+  .nav-links{display:none}
+  .cm-kpis{grid-template-columns:1fr}
+  .infra-metrics{grid-template-columns:1fr 1fr}.im:nth-child(3n){border-right:1px solid var(--line)}.im:nth-child(2n){border-right:none}
+  .case-stats{grid-template-columns:1fr}
+  .cta-box{padding:56px 24px}
+  .foot-top{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms!important;transition-duration:.01ms!important}
+  .rv{opacity:1;transform:none}.aurora .blob{animation:none}
+}
+</style>
+</head>
+<body class="lock">
+
+<!-- PRELOADER -->
+<div class="loader" id="loader">
+  <div class="loader-ring"><svg viewBox="0 0 50 50"><circle cx="25" cy="25" r="20" stroke="rgba(200,184,245,.15)"/><circle cx="25" cy="25" r="20" stroke="#C8B8F5" stroke-dasharray="90 160"/></svg></div>
+  <div class="loader-logo">zeta<span class="d"></span></div>
+  <div class="loader-pct" id="loadPct">000</div>
+</div>
+
+<div class="grain"></div>
+<div class="progress" id="progress"></div>
+
+<div class="wrap">
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="c nav-row">
+    <a href="#top" class="logo">zeta<span class="d"></span></a>
+    <div class="nav-links" id="navLinks">
+      <button class="nav-trigger" data-panel="modern" aria-haspopup="true" aria-expanded="false">Modernisation<span class="chev"></span></button>
+      <button class="nav-trigger" data-panel="platform" aria-haspopup="true" aria-expanded="false">Platform<span class="chev"></span></button>
+      <button class="nav-trigger" data-panel="solutions" aria-haspopup="true" aria-expanded="false">Solutions<span class="chev"></span></button>
+      <button class="nav-trigger" data-panel="services" aria-haspopup="true" aria-expanded="false">Services<span class="chev"></span></button>
+      <button class="nav-trigger" data-panel="resources" aria-haspopup="true" aria-expanded="false">Resources<span class="chev"></span></button>
+      <button class="nav-trigger" data-panel="company" aria-haspopup="true" aria-expanded="false">Company<span class="chev"></span></button>
+    </div>
+    <div class="nav-right">
+      <a href="#" class="nav-ghost">Sign in</a>
+      <a href="#contact" class="btn btn-p btn-sm">Talk to us <span class="ar">→</span></a>
+      <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+
+  <!-- MEGA MENU -->
+  <div class="mega" id="mega">
+    <div class="mega-bg">
+      <div class="c">
+
+        <!-- Modernisation -->
+        <div class="mega-panel" data-panel="modern">
+          <div class="mega-inner">
+            <a href="#" class="mega-feature">
+              <div class="mf-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
+              <div class="mf-t">Modern Banking Reference Architecture</div>
+              <div class="mf-d">The blueprint for migrating off legacy — a composable, cloud-native foundation for regulated banking.</div>
+              <span class="mf-l">Explore the architecture →</span>
+            </a>
+            <div class="mega-cols">
+              <div class="mcol">
+                <div class="mcol-h">Modernisation Strategies</div>
+                <a class="mitem" href="#">Modern Banking Reference Architecture</a>
+                <a class="mitem" href="#case">Migration Case Studies</a>
+                <a class="mitem" href="#infrastructure">Platform Strength</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Platform -->
+        <div class="mega-panel" data-panel="platform">
+          <div class="mega-inner">
+            <a href="#platforms" class="mega-feature">
+              <div class="mf-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+              <div class="mf-t">Platform Overview</div>
+              <div class="mf-d">Three proprietary, cloud-native platforms — Tachyon, Cipher, and Neutrino — engineered from first principles.</div>
+              <span class="mf-l">See the platform →</span>
+            </a>
+            <div class="mega-cols">
+              <div class="mcol">
+                <div class="mcol-h">Issuing</div>
+                <a class="mitem" href="#">Credit Cards</a>
+                <a class="mitem" href="#">Debit Cards</a>
+                <a class="mitem" href="#">Prepaid Accounts</a>
+                <a class="mitem" href="#">Virtual Cards</a>
+              </div>
+              <div class="mcol">
+                <div class="mcol-h">Digital Payments &amp; Processing</div>
+                <a class="mitem" href="#">UPI Issuer Processing</a>
+                <a class="mitem" href="#">UPI Acquirer Processing</a>
+                <a class="mitem" href="#">Checkout</a>
+                <a class="mitem" href="#">Issuer Wallets</a>
+              </div>
+              <div class="mcol">
+                <div class="mcol-h">Digital Banking</div>
+                <a class="mitem" href="#">Digital Accounts</a>
+                <a class="mitem" href="#">Digital Engagement</a>
+                <div class="mcol-h" style="margin-top:22px">Identity &amp; Access</div>
+                <a class="mitem" href="#">Consumer IAM</a>
+                <a class="mitem" href="#">Credit Line on UPI</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Solutions -->
+        <div class="mega-panel" data-panel="solutions">
+          <div class="mega-inner">
+            <div class="mega-cols cols-4">
+              <div class="mcol">
+                <div class="mcol-h">Credit Cards</div>
+                <a class="mlead" href="#">Retail Credit Cards</a>
+                <div class="mgroup">
+                  <a class="mlead" href="#">Corporate Credit Cards</a>
+                  <a class="msub" href="#">Corporate Cards</a>
+                  <a class="msub" href="#">Virtual Credit Cards</a>
+                </div>
+                <a class="mlead" href="#">Co-branded Credit Cards</a>
+              </div>
+              <div class="mcol">
+                <div class="mcol-h">Prepaid</div>
+                <div class="mgroup">
+                  <a class="mlead" href="#">Corporate Prepaid Solutions</a>
+                  <a class="msub" href="#">Closed Loop Wallets</a>
+                  <a class="msub" href="#">Employee Benefits</a>
+                </div>
+                <div class="mgroup">
+                  <a class="mlead" href="#">Retail Prepaid Solutions</a>
+                  <a class="msub" href="#">General Purpose Reloadable</a>
+                </div>
+              </div>
+              <div class="mcol">
+                <div class="mcol-h">UPI</div>
+                <div class="mgroup">
+                  <a class="mlead" href="#">UPI Issuing</a>
+                  <a class="msub" href="#">UPI Issuing Switch</a>
+                  <a class="msub" href="#">UPI Issuing PSP</a>
+                </div>
+                <div class="mgroup">
+                  <a class="mlead" href="#">UPI Acquiring</a>
+                  <a class="msub" href="#">UPI Acquiring Switch</a>
+                  <a class="msub" href="#">UPI Acquiring PSP</a>
+                </div>
+              </div>
+              <div class="mcol">
+                <div class="mcol-h">Credit Line</div>
+                <div class="mgroup">
+                  <a class="mlead" href="#">Credit Line on UPI (CLOU)</a>
+                  <a class="msub" href="#">BNPL</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Services -->
+        <div class="mega-panel" data-panel="services">
+          <div class="mega-inner">
+            <div class="mega-cols cols-2">
+              <div class="mcol">
+                <div class="mcol-h">Services</div>
+                <a class="mitem-rich" href="#"><b>Zeta Studios</b><span>Design and build for differentiated banking experiences.</span></a>
+                <a class="mitem-rich" href="#"><b>Operations</b><span>Run, monitor, and scale live programmes around the clock.</span></a>
+              </div>
+              <div class="mcol">
+                <div class="mcol-h">&nbsp;</div>
+                <a class="mitem-rich" href="#"><b>Customer Support</b><span>Tiered support across every market and channel.</span></a>
+                <a class="mitem-rich" href="#"><b>Fulfillment Services</b><span>Card production, personalisation, and delivery at scale.</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Resources -->
+        <div class="mega-panel" data-panel="resources">
+          <div class="mega-inner">
+            <a href="#case" class="mega-feature">
+              <div class="mf-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg></div>
+              <div class="mf-t">Case Studies</div>
+              <div class="mf-d">How PayZapp helped India's largest private bank reclaim payment primacy.</div>
+              <span class="mf-l">Read the stories →</span>
+            </a>
+            <div class="mega-cols">
+              <div class="mcol">
+                <div class="mcol-h">Insights</div>
+                <a class="mitem" href="#insights">eBooks</a>
+                <a class="mitem" href="#insights">Whitepapers</a>
+                <a class="mitem" href="#insights">Reports</a>
+                <a class="mitem" href="#insights">Blog</a>
+              </div>
+              <div class="mcol">
+                <div class="mcol-h">More</div>
+                <a class="mitem" href="#">Case Studies</a>
+                <a class="mitem" href="#">Events</a>
+                <a class="mitem" href="#">Trust Centre</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Company -->
+        <div class="mega-panel" data-panel="company">
+          <div class="mega-inner">
+            <div class="mega-cols cols-2">
+              <div class="mcol">
+                <div class="mcol-h">Company</div>
+                <a class="mitem" href="#">Manifesto</a>
+                <a class="mitem" href="#">About Us</a>
+                <a class="mitem" href="#">Our Investors</a>
+              </div>
+              <div class="mcol">
+                <div class="mcol-h">&nbsp;</div>
+                <a class="mitem" href="#">Newsroom</a>
+                <a class="mitem" href="#">Careers</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mnav" id="mnav">
+  <div class="mnav-head">
+    <span class="logo">zeta<span class="d"></span></span>
+    <button class="mnav-close" id="mnavClose" aria-label="Close menu">✕</button>
+  </div>
+  <div class="mnav-body">
+    <details><summary>Modernisation</summary><div class="msec"><a href="#">Modern Banking Reference Architecture</a><a href="#case">Migration Case Studies</a><a href="#infrastructure">Platform Strength</a></div></details>
+    <details><summary>Platform</summary><div class="msec">
+      <span class="msec-h">Issuing</span><a href="#">Credit Cards</a><a href="#">Debit Cards</a><a href="#">Prepaid Accounts</a><a href="#">Virtual Cards</a>
+      <span class="msec-h">Digital Payments &amp; Processing</span><a href="#">UPI Issuer Processing</a><a href="#">UPI Acquirer Processing</a><a href="#">Checkout</a><a href="#">Issuer Wallets</a>
+      <span class="msec-h">Digital Banking</span><a href="#">Digital Accounts</a><a href="#">Digital Engagement</a>
+      <span class="msec-h">Identity &amp; Access</span><a href="#">Consumer IAM</a><a href="#">Credit Line on UPI</a>
+    </div></details>
+    <details><summary>Solutions</summary><div class="msec">
+      <span class="msec-h">Credit Cards</span><a href="#">Retail Credit Cards</a><a href="#">Corporate Credit Cards</a><a href="#" class="ind">Corporate Cards</a><a href="#" class="ind">Virtual Credit Cards</a><a href="#">Co-branded Credit Cards</a>
+      <span class="msec-h">Prepaid</span><a href="#">Corporate Prepaid Solutions</a><a href="#" class="ind">Closed Loop Wallets</a><a href="#" class="ind">Employee Benefits</a><a href="#">Retail Prepaid Solutions</a><a href="#" class="ind">General Purpose Reloadable</a>
+      <span class="msec-h">UPI</span><a href="#">UPI Issuing</a><a href="#" class="ind">UPI Issuing Switch</a><a href="#" class="ind">UPI Issuing PSP</a><a href="#">UPI Acquiring</a><a href="#" class="ind">UPI Acquiring Switch</a><a href="#" class="ind">UPI Acquiring PSP</a>
+      <span class="msec-h">Credit Line</span><a href="#">Credit Line on UPI (CLOU)</a><a href="#" class="ind">BNPL</a>
+    </div></details>
+    <details><summary>Services</summary><div class="msec"><a href="#">Zeta Studios</a><a href="#">Operations</a><a href="#">Customer Support</a><a href="#">Fulfillment Services</a></div></details>
+    <details><summary>Resources</summary><div class="msec"><a href="#">Case Studies</a><span class="msec-h">Insights</span><a href="#insights">eBooks</a><a href="#insights">Whitepapers</a><a href="#insights">Reports</a><a href="#insights">Blog</a><a href="#">Events</a><a href="#">Trust Centre</a></div></details>
+    <details><summary>Company</summary><div class="msec"><a href="#">Manifesto</a><a href="#">About Us</a><a href="#">Our Investors</a><a href="#">Newsroom</a><a href="#">Careers</a></div></details>
+  </div>
+  <div class="mnav-foot">
+    <a href="#" class="nav-ghost">Sign in</a>
+    <a href="#contact" class="btn btn-p">Talk to us →</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <canvas id="net"></canvas>
+  <div class="aurora"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span></div>
+  <div class="hero-grid"></div>
+  <div class="c hero-inner">
+    <div class="hero-badge"><span class="tag">Platform-Led</span>Banking technology infrastructure</div>
+    <h1>We solve the <span class="grad-t">hardest problems</span> in banking.</h1>
+    <p class="hero-sub">Financial institutions bring us what others won't take on. We answer with proprietary platforms, practitioners who've run programmes inside banks, and a methodology that goes live — without exception.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn btn-p">Talk to our team <span class="ar">→</span></a>
+      <a href="#case" class="btn btn-g">View case studies</a>
+    </div>
+    <div class="hero-trust">Running banking at scale across 7 countries · 25M+ cards live</div>
+
+    <!-- CONSOLE -->
+    <div class="console rv">
+      <div class="console-bar">
+        <div class="dots"><i></i><i></i><i></i></div>
+        <div class="ttl">zeta · platform console</div>
+        <div class="live"><span class="lv"></span>LIVE</div>
+      </div>
+      <div class="console-body">
+        <aside class="console-side">
+          <div class="cs-lab">Platforms</div>
+          <div class="cs-item on"><span class="ci" style="background:var(--lav)"></span>Tachyon</div>
+          <div class="cs-item"><span class="ci" style="background:#5BD6A0"></span>Cipher</div>
+          <div class="cs-item"><span class="ci" style="background:#E3C06A"></span>Neutrino</div>
+          <div class="cs-lab" style="margin-top:18px">Regions</div>
+          <div class="cs-item"><span class="ci" style="background:var(--violet)"></span>India</div>
+          <div class="cs-item"><span class="ci" style="background:var(--violet)"></span>United States</div>
+          <div class="cs-item"><span class="ci" style="background:var(--violet)"></span>SE Asia</div>
+        </aside>
+        <div class="console-main">
+          <div class="cm-kpis">
+            <div class="cm-kpi"><div class="l">Cards live</div><div class="v"><span data-count="25">0</span><em>M+</em></div></div>
+            <div class="cm-kpi"><div class="l">Peak TPS</div><div class="v"><span data-count="1">0</span><em>M+</em></div></div>
+            <div class="cm-kpi"><div class="l">Latency p99</div><div class="v">&lt;<span data-count="100">0</span><em>ms</em></div></div>
+          </div>
+          <div class="cm-chart">
+            <div class="ch"><b>Transaction throughput</b><span>▲ 18% peak</span></div>
+            <div class="cl">Live · transactions per second across all tenants</div>
+            <svg viewBox="0 0 640 150" preserveAspectRatio="none" style="width:100%;height:140px">
+              <defs><linearGradient id="lg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8A6BF0" stop-opacity=".35"/><stop offset="1" stop-color="#8A6BF0" stop-opacity="0"/></linearGradient></defs>
+              <path d="M0 120 L60 104 L120 112 L180 80 L240 92 L300 60 L360 72 L420 44 L480 58 L540 30 L600 40 L640 24 L640 150 L0 150 Z" fill="url(#lg)"/>
+              <path d="M0 120 L60 104 L120 112 L180 80 L240 92 L300 60 L360 72 L420 44 L480 58 L540 30 L600 40 L640 24" stroke="#C8B8F5" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- LOGO STRIP -->
+<section class="strip ls">
+  <div class="c">
+    <div class="strip-lab">Powering banking for the institutions people trust</div>
+    <div class="strip-row"><span>HDFC Bank</span><span>PayZapp</span><span>Mastercard</span><span>Visa</span><span>RuPay</span><span>NPCI</span></div>
+  </div>
+</section>
+
+<!-- APPROACH -->
+<section class="sec ls" id="approach">
+  <div class="c">
+    <div class="sec-head rv">
+      <span class="eyebrow">Our Approach</span>
+      <h2 class="h2">The right platforms. The right people. <em>The pedigree to deliver.</em></h2>
+      <p class="sub">Practitioners who've spent careers inside banking — who understand what a regulated institution needs before it's fully articulated in a brief.</p>
+    </div>
+    <div class="appr-grid">
+      <div class="appr glass rv">
+        <div class="appr-ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+        <div class="appr-no">01 — Platforms</div>
+        <h3>Built from first principles.</h3>
+        <p>Tachyon, Cipher, and Neutrino — three cloud-native platforms built from scratch, not adapted from legacy. Purpose-built for the scale and compliance of modern banking.</p>
+        <div class="appr-stat"><b data-count="3">0</b><span>Proprietary platforms. Cloud-native, API-first, certified.</span></div>
+      </div>
+      <div class="appr glass rv s1">
+        <div class="appr-ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div class="appr-no">02 — People</div>
+        <h3>Domain experts, not generalists.</h3>
+        <p>Banking practitioners who've built programmes inside financial institutions. They recognise the real problem before it's been fully articulated in a brief.</p>
+        <div class="appr-stat"><b data-count="1700" data-suffix="+">0</b><span>Practitioners across banking, product, and technology.</span></div>
+      </div>
+      <div class="appr glass rv s2">
+        <div class="appr-ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+        <div class="appr-no">03 — Implementation</div>
+        <h3>A methodology built to deliver.</h3>
+        <p>The operating model and compliance framework to take complex programmes live inside regulated environments. On schedule, without exception.</p>
+        <div class="appr-stat"><b data-count="25" data-suffix="M+">0</b><span>Cards live in production, across 7 countries.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLATFORMS -->
+<section class="sec s-plat ls" id="platforms">
+  <div class="c">
+    <div class="sec-head center rv">
+      <span class="eyebrow">Platform IP</span>
+      <h2 class="h2">Our own IP — <em>engineered</em>, not licensed.</h2>
+      <p class="sub">Three purpose-built platforms forming the foundation of everything we deliver. Not licensed middleware — proprietary technology, built from first principles.</p>
+    </div>
+    <div class="plat-grid">
+      <div class="plat glass rv">
+        <div class="plat-top">
+          <div class="plat-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+          <span class="plat-tag">01 / Processing</span>
+        </div>
+        <div class="plat-name">Tachyon</div>
+        <div class="plat-role">Transaction Processing Engine</div>
+        <p class="plat-desc">Cloud-native, real-time processing built for velocity, variability, and volume — designed from first principles, not adapted from legacy.</p>
+        <ul class="plat-caps">
+          <li>Sub-100ms response on every consumer action</li>
+          <li>Configurable reward & offer logic at transaction time</li>
+          <li>Multi-tenancy for co-brand and white-label programmes</li>
+        </ul>
+        <a href="#" class="plat-link">Learn about Tachyon →</a>
+      </div>
+      <div class="plat glass rv s1">
+        <div class="plat-top">
+          <div class="plat-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          <span class="plat-tag">02 / Security</span>
+        </div>
+        <div class="plat-name">Cipher</div>
+        <div class="plat-role">Identity, Security & Compliance</div>
+        <p class="plat-desc">A unified security layer abstracting regulatory complexity — PCI-DSS, RBI, and beyond — without bespoke engineering for each market.</p>
+        <ul class="plat-caps">
+          <li>KYC, KYB, and AML built in</li>
+          <li>Multi-market regulatory framework</li>
+          <li>Fraud detection and tokenisation</li>
+        </ul>
+        <a href="#" class="plat-link">Learn about Cipher →</a>
+      </div>
+      <div class="plat glass rv s2">
+        <div class="plat-top">
+          <div class="plat-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg></div>
+          <span class="plat-tag">03 / Engagement</span>
+        </div>
+        <div class="plat-name">Neutrino</div>
+        <div class="plat-role">Digital Engagement Platform</div>
+        <p class="plat-desc">An omni-channel experience layer with a unified intelligence foundation and its own knowledge ontology — context-aware banking across every touchpoint.</p>
+        <ul class="plat-caps">
+          <li>Omni-channel digital experiences</li>
+          <li>Common intelligence layer & knowledge ontology</li>
+          <li>Personalised, context-aware banking</li>
+        </ul>
+        <a href="#" class="plat-link">Learn about Neutrino →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASE -->
+<section class="sec s-case ls" id="case">
+  <div class="c">
+    <div class="case-grid">
+      <div class="rv">
+        <div class="case-tags"><span class="tg">HDFC Bank</span><span class="tg">PayZapp</span><span class="tg gold">★ Celent Model Bank 2024</span></div>
+        <h2>How Zeta helped India's largest private bank <em>reclaim customer primacy</em> in payments.</h2>
+        <div class="case-95"><b><span data-count="95">0</span></b><i>%</i></div>
+        <p class="case-p">of the bank's customers were paying through third-party apps. Three fintech apps controlled <strong>85% of all UPI transactions</strong> in India. The bank provided the infrastructure — and owned none of the relationship.</p>
+      </div>
+      <div class="rv s1">
+        <div class="pay glass">
+          <div class="pay-h">Choose how to pay</div>
+          <div class="pay-opt on">
+            <div class="pay-ic">P</div>
+            <div class="pay-info"><div class="pay-name">PayZapp by HDFC Bank</div><div class="pay-sub">UPI · Cards · Wallet · & more</div></div>
+            <div class="pay-rd"></div>
+          </div>
+          <div class="pay-opt">
+            <div class="pay-ic">F</div>
+            <div class="pay-info"><div class="pay-name">Fintech App</div><div class="pay-sub">UPI only</div></div>
+            <div class="pay-rd"></div>
+          </div>
+        </div>
+        <div class="case-stats">
+          <div class="cstat glass"><b data-count="5.6" data-suffix="M">0</b><span>Customers adopted, limited marketing</span></div>
+          <div class="cstat glass"><b data-count="4.7" data-suffix="+">0</b><span>App store rating, iOS & Android</span></div>
+          <div class="cstat glass"><b data-count="35" data-suffix="%">0</b><span>Were new-to-bank customers</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INFRA -->
+<section class="sec s-infra" id="infrastructure">
+  <div class="c">
+    <div class="sec-head center rv">
+      <span class="eyebrow">Platform Strength</span>
+      <h2 class="h2">Built for the high-scale demands of <em>modern banking.</em></h2>
+      <p class="sub">Every architectural decision measured against one benchmark: can it serve a major bank's entire customer base, at full load, without compromise?</p>
+    </div>
+    <div class="infra-metrics rv">
+      <div class="im"><b><span data-count="25">0</span><em>M+</em></b><span>Cards live in production</span></div>
+      <div class="im"><b><span data-count="1">0</span><em>M+</em></b><span>Transactions / sec, peak</span></div>
+      <div class="im"><b><span data-count="60">0</span><em>M+</em></b><span>Contracted accounts</span></div>
+      <div class="im"><b>&lt;<span data-count="100">0</span><em>ms</em></b><span>Response, every action</span></div>
+      <div class="im"><b><span data-count="800">0</span><em>M+</em></b><span>MFA authentications</span></div>
+      <div class="im"><b><span data-count="10">0</span><em>yr</em></b><span>In production at scale</span></div>
+    </div>
+    <div class="spec-grid">
+      <div class="spec glass rv">
+        <div class="spec-no">A1</div>
+        <div><h4>Cloud-native architecture</h4><p>Built cloud-native from the ground up — not a legacy system rehosted. Elastic scale, <strong>zero scheduled downtime</strong>, continuous delivery on AWS, Azure, or GCP.</p><div class="spec-pills"><span class="spill">AWS</span><span class="spill">Azure</span><span class="spill">GCP</span><span class="spill">PaaS</span></div></div>
+      </div>
+      <div class="spec glass rv s1">
+        <div class="spec-no">A2</div>
+        <div><h4>Zero-trust security</h4><p>Security governs every layer — continuous verification, encryption at rest and in transit, segmentation. <strong>800M+ MFA authentications. No reported breach.</strong></p><div class="spec-pills"><span class="spill">PCI-DSS L1</span><span class="spill">ISO 27001</span><span class="spill">RBI</span><span class="spill">FIDO2</span></div></div>
+      </div>
+      <div class="spec glass rv">
+        <div class="spec-no">A3</div>
+        <div><h4>Adopt on your terms</h4><p><strong>15+ independently deployable modules.</strong> Add card management. Run the UPI switch in parallel. Expand into lending when ready. No big bang, no disruption.</p><div class="spec-pills"><span class="spill">Modular</span><span class="spill">API-first</span><span class="spill">15+ components</span></div></div>
+      </div>
+      <div class="spec glass rv s1">
+        <div class="spec-no">A4</div>
+        <div><h4>Certified across networks</h4><p>Certified with NPCI, Mastercard, Visa, and RuPay. Proven in regulated markets across <strong>India, the US, Southeast Asia,</strong> and beyond.</p><div class="spec-pills"><span class="spill">NPCI</span><span class="spill">Mastercard</span><span class="spill">Visa</span><span class="spill">RuPay</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSIGHTS -->
+<section class="sec ls" id="insights">
+  <div class="c">
+    <div class="sec-head rv">
+      <span class="eyebrow">Resources</span>
+      <h2 class="h2">What we're <em>thinking</em> about.</h2>
+    </div>
+    <div class="ins-grid">
+      <a href="#" class="ins glass rv"><span class="ins-type">White Paper</span><h3>Shattering the Co-Brand Glass Ceiling</h3><p>15 strategic plays for co-brand programme success — and why legacy architecture is the real ceiling.</p><span class="ins-cta">Read the paper →</span></a>
+      <a href="#" class="ins glass rv s1"><span class="ins-type">eBook</span><h3>Reimagining UPI for Banks: 10 Winning Ideas</h3><p>A product-led guide for banks to capture the next wave of UPI growth.</p><span class="ins-cta">Download the guide →</span></a>
+      <a href="#" class="ins glass rv s2"><span class="ins-type">White Paper</span><h3>The $1 Trillion Credit Line on UPI Opportunity</h3><p>A definitive launch playbook for banks ready to move from pilot to scale.</p><span class="ins-cta">Get the playbook →</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="s-cta" id="contact">
+  <div class="c">
+    <div class="cta-box rv">
+      <h2>Tell us the problem.<br>We'll show you <em>what's possible.</em></h2>
+      <p>We don't do generic demos. Every conversation starts with the specific outcome you're trying to achieve.</p>
+      <div class="cta-btns">
+        <a href="#" class="btn btn-p">Talk to our team <span class="ar">→</span></a>
+        <a href="#case" class="btn btn-g">See our work first</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="c">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <div class="logo">zeta<span class="d"></span></div>
+        <p>Banking technology that solves the problems others won't take on.</p>
+      </div>
+      <div class="fcol"><h4>Platforms</h4><a href="#">Tachyon</a><a href="#">Cipher</a><a href="#">Neutrino</a></div>
+      <div class="fcol"><h4>Solutions</h4><a href="#">Card Modernization</a><a href="#">Co-branded Cards</a><a href="#">Credit Line on UPI</a><a href="#">Digital Banking</a><a href="#">Employee Benefits</a></div>
+      <div class="fcol"><h4>Company</h4><a href="#">Our Work</a><a href="#">Insights</a><a href="#">Manifesto</a><a href="#">Careers</a><a href="#">Trust Centre</a></div>
+    </div>
+    <div class="foot-bot">
+      <div class="cp">© 2026 Better World Technology Pvt. Ltd.</div>
+      <div class="foot-certs"><span class="fcert">PCI-DSS L1</span><span class="fcert">ISO 27001</span><span class="fcert">SOC 2 Type II</span><span class="fcert">RBI</span></div>
+    </div>
+  </div>
+</footer>
+
+</div><!-- /.wrap -->
+
+<script>
+(function(){
+  'use strict';
+  var rm=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+  /* ── HERO NETWORK ANIMATION ── */
+  var canvas=document.getElementById('net'),ctx=canvas.getContext('2d');
+  var nodes=[],W,H,raf,dpr=Math.min(window.devicePixelRatio||1,2),mouse={x:-999,y:-999};
+  function size(){W=canvas.offsetWidth;H=canvas.offsetHeight;canvas.width=W*dpr;canvas.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);}
+  function build(){
+    nodes=[];var count=Math.min(Math.round(W*H/16000),90);
+    for(var i=0;i<count;i++){nodes.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.28,vy:(Math.random()-.5)*.28,r:Math.random()*1.6+.8});}
+  }
+  function frame(){
+    ctx.clearRect(0,0,W,H);
+    for(var i=0;i<nodes.length;i++){
+      var n=nodes[i];n.x+=n.vx;n.y+=n.vy;
+      if(n.x<0||n.x>W)n.vx*=-1; if(n.y<0||n.y>H)n.vy*=-1;
+      for(var j=i+1;j<nodes.length;j++){
+        var m=nodes[j],dx=n.x-m.x,dy=n.y-m.y,d=Math.sqrt(dx*dx+dy*dy);
+        if(d<130){ctx.strokeStyle='rgba(170,150,235,'+(.10*(1-d/130))+')';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(n.x,n.y);ctx.lineTo(m.x,m.y);ctx.stroke();}
+      }
+      var mdx=n.x-mouse.x,mdy=n.y-mouse.y,md=Math.sqrt(mdx*mdx+mdy*mdy);
+      var glow=md<150?1-md/150:0;
+      ctx.fillStyle='rgba('+(200+glow*40)+','+(184+glow*30)+',245,'+(.35+glow*.5)+')';
+      ctx.beginPath();ctx.arc(n.x,n.y,n.r+glow*1.5,0,Math.PI*2);ctx.fill();
+    }
+    raf=requestAnimationFrame(frame);
+  }
+  function startNet(){ if(rm){size();build();ctx.clearRect(0,0,W,H);
+      for(var i=0;i<nodes.length;i++){var n=nodes[i];ctx.fillStyle='rgba(200,184,245,.4)';ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,Math.PI*2);ctx.fill();}return;}
+    size();build();cancelAnimationFrame(raf);frame(); }
+  window.addEventListener('resize',function(){size();build();});
+  window.addEventListener('mousemove',function(e){var r=canvas.getBoundingClientRect();mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;});
+  window.addEventListener('mouseleave',function(){mouse.x=-999;mouse.y=-999;});
+  document.addEventListener('visibilitychange',function(){if(document.hidden)cancelAnimationFrame(raf);else if(!rm)frame();});
+
+  /* ── PRELOADER ── */
+  var loader=document.getElementById('loader'),pct=document.getElementById('loadPct');
+  var p=0,t=setInterval(function(){p+=Math.random()*15+8;if(p>=100){p=100;clearInterval(t);fin();}pct.textContent=String(Math.floor(p)).padStart(3,'0');},120);
+  function fin(){setTimeout(function(){loader.classList.add('done');document.body.classList.remove('lock');startNet();startReveal();},420);}
+
+  /* ── REVEAL ── */
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+  function startReveal(){document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});}
+  if(rm)document.querySelectorAll('.rv').forEach(function(el){el.classList.add('in');});
+
+  /* ── NAV + PROGRESS ── */
+  var nav=document.getElementById('nav'),prog=document.getElementById('progress');
+  function sc(){var y=window.scrollY,h=document.documentElement.scrollHeight-window.innerHeight;prog.style.width=(h>0?y/h*100:0)+'%';nav.classList.toggle('solid',y>40);}
+  window.addEventListener('scroll',sc,{passive:true});sc();
+
+  /* ── COUNT-UP ── */
+  function fmt(v,d){return d?v.toFixed(1):Math.round(v).toLocaleString('en-US');}
+  function run(el){var tg=parseFloat(el.getAttribute('data-count')),sf=el.getAttribute('data-suffix')||'',d=(tg%1!==0)?1:0,dur=1400,s=null;
+    function step(ts){if(!s)s=ts;var k=Math.min((ts-s)/dur,1),e=1-Math.pow(1-k,3);el.textContent=fmt(tg*e,d)+sf;if(k<1)requestAnimationFrame(step);else el.textContent=fmt(tg,d)+sf;}requestAnimationFrame(step);}
+  var cio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){run(e.target);cio.unobserve(e.target);}});},{threshold:.6});
+  document.querySelectorAll('[data-count]').forEach(function(el){if(rm){el.textContent=el.getAttribute('data-count')+(el.getAttribute('data-suffix')||'');}else cio.observe(el);});
+
+  /* ── CARD GLOW FOLLOW ── */
+  if(window.matchMedia('(pointer:fine)').matches){
+    document.querySelectorAll('.glass').forEach(function(card){
+      card.addEventListener('mousemove',function(e){var r=card.getBoundingClientRect();card.style.setProperty('--mx',((e.clientX-r.left)/r.width*100)+'%');card.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%');});
+    });
+  }
+  /* ── MAGNETIC PRIMARY ── */
+  if(window.matchMedia('(pointer:fine)').matches&&!rm){
+    document.querySelectorAll('.btn-p').forEach(function(b){
+      b.addEventListener('mousemove',function(e){var r=b.getBoundingClientRect();b.style.transform='translate('+((e.clientX-r.left-r.width/2)*.14)+'px,'+((e.clientY-r.top-r.height/2)*.22-2)+'px)';});
+      b.addEventListener('mouseleave',function(){b.style.transform='';});
+    });
+  }
+
+  /* ── MEGA MENU ── */
+  var mega=document.getElementById('mega'),triggers=Array.prototype.slice.call(document.querySelectorAll('.nav-trigger')),
+      panels=Array.prototype.slice.call(document.querySelectorAll('.mega-panel')),closeT=null,current=null;
+  function openPanel(name){
+    clearTimeout(closeT);
+    if(current===name && mega.classList.contains('open'))return;
+    current=name;
+    panels.forEach(function(p){p.classList.toggle('show',p.getAttribute('data-panel')===name);});
+    triggers.forEach(function(t){var a=t.getAttribute('data-panel')===name;t.classList.toggle('active',a);t.setAttribute('aria-expanded',a?'true':'false');});
+    mega.classList.add('open');nav.classList.add('mega-active');
+  }
+  function closeMega(){
+    mega.classList.remove('open');nav.classList.remove('mega-active');current=null;
+    triggers.forEach(function(t){t.classList.remove('active');t.setAttribute('aria-expanded','false');});
+  }
+  function schedClose(){clearTimeout(closeT);closeT=setTimeout(closeMega,180);}
+  triggers.forEach(function(t){
+    var name=t.getAttribute('data-panel');
+    t.addEventListener('mouseenter',function(){openPanel(name);});
+    t.addEventListener('focus',function(){openPanel(name);});
+    t.addEventListener('click',function(e){e.preventDefault();if(current===name&&mega.classList.contains('open'))closeMega();else openPanel(name);});
+  });
+  [nav,mega].forEach(function(el){
+    el.addEventListener('mouseenter',function(){clearTimeout(closeT);});
+    el.addEventListener('mouseleave',schedClose);
+  });
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeMega();closeMobile();}});
+
+  /* ── MOBILE NAV ── */
+  var burger=document.getElementById('burger'),mnav=document.getElementById('mnav'),mnavClose=document.getElementById('mnavClose');
+  function openMobile(){mnav.classList.add('open');burger.classList.add('on');burger.setAttribute('aria-expanded','true');document.body.classList.add('lock');}
+  function closeMobile(){mnav.classList.remove('open');burger.classList.remove('on');burger.setAttribute('aria-expanded','false');document.body.classList.remove('lock');}
+  burger.addEventListener('click',function(){mnav.classList.contains('open')?closeMobile():openMobile();});
+  mnavClose.addEventListener('click',closeMobile);
+  mnav.querySelectorAll('.msec a, .mnav-foot a').forEach(function(a){a.addEventListener('click',closeMobile);});
+
+  /* ── SAFETY ── */
+  window.addEventListener('load',function(){setTimeout(function(){if(document.body.classList.contains('lock')&&!mnav.classList.contains('open')){loader.classList.add('done');document.body.classList.remove('lock');startNet();startReveal();}},2600);});
+})();
+</script>
+</body>
+</html>
