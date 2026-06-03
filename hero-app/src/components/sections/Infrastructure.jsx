@@ -1,58 +1,54 @@
 import Reveal from '../Reveal.jsx'
 import CountUp from '../CountUp.jsx'
-import { Eyebrow } from './_shared.jsx'
+import { tileDark } from './_shared.jsx'
 
-const METRICS = [
-  { end: 25, suffix: 'M+', label: 'Cards live in production' },
-  { end: 1, suffix: 'M+', label: 'Transactions / sec, peak' },
-  { end: 60, suffix: 'M+', label: 'Contracted accounts' },
-  { end: 100, prefix: '<', suffix: 'ms', label: 'Response, every action' },
-  { end: 800, suffix: 'M+', label: 'MFA authentications' },
-  { end: 10, suffix: 'yr', label: 'In production at scale' },
-]
+/* Small metric tile */
+function Metric({ end, prefix, suffix, label, className = '' }) {
+  return (
+    <div className={`flex flex-col justify-between p-6 ${tileDark} ${className}`}>
+      <b className="text-[clamp(28px,3vw,38px)] font-bold leading-none tracking-[-1.5px] text-white">
+        {prefix}
+        <CountUp end={end} />
+        <em className="ml-0.5 not-italic text-[15px] text-violet-soft">{suffix}</em>
+      </b>
+      <span className="mt-4 font-mono text-[10.5px] leading-snug text-white/45">{label}</span>
+    </div>
+  )
+}
 
-const SPECS = [
-  {
-    no: 'A1',
-    title: 'Cloud-native architecture',
-    body: 'Built cloud-native from the ground up — not a legacy system rehosted. Elastic scale, zero scheduled downtime, continuous delivery on AWS, Azure, or GCP.',
-    pills: ['AWS', 'Azure', 'GCP', 'PaaS'],
-  },
-  {
-    no: 'A2',
-    title: 'Zero-trust security',
-    body: 'Security governs every layer — continuous verification, encryption at rest and in transit, segmentation. 800M+ MFA authentications. No reported breach.',
-    pills: ['PCI-DSS L1', 'ISO 27001', 'RBI', 'FIDO2'],
-  },
-  {
-    no: 'A3',
-    title: 'Adopt on your terms',
-    body: '15+ independently deployable modules. Add card management. Run the UPI switch in parallel. Expand into lending when ready. No big bang, no disruption.',
-    pills: ['Modular', 'API-first', '15+ components'],
-  },
-  {
-    no: 'A4',
-    title: 'Certified across networks',
-    body: 'Certified with NPCI, Mastercard, Visa, and RuPay. Proven in regulated markets across India, the US, Southeast Asia, and beyond.',
-    pills: ['NPCI', 'Mastercard', 'Visa', 'RuPay'],
-  },
-]
+/* Spec tile with pills */
+function Spec({ no, title, body, pills, className = '' }) {
+  return (
+    <div className={`flex flex-col p-7 ${tileDark} ${className}`}>
+      <div className="flex items-center gap-3">
+        <span className="font-mono text-[12px] text-violet-soft">{no}</span>
+        <h4 className="text-[17px] font-bold tracking-[-0.3px] text-white">{title}</h4>
+      </div>
+      <p className="mt-3 text-[13.5px] leading-relaxed text-white/55">{body}</p>
+      <div className="mt-auto flex flex-wrap gap-2 pt-5">
+        {pills.map((p) => (
+          <span
+            key={p}
+            className="rounded-full border border-white/10 px-2.5 py-1 font-mono text-[10px] text-white/55"
+          >
+            {p}
+          </span>
+        ))}
+      </div>
+    </div>
+  )
+}
 
 export default function Infrastructure() {
   return (
-    <section
-      id="infrastructure"
-      className="relative overflow-hidden bg-[#0B0A12] py-28"
-    >
-      {/* fade in from the preceding light section */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-[#F5F0FD] to-transparent"
-      />
+    <section id="infrastructure" className="relative overflow-hidden bg-[#0B0A12] py-28">
       <div className="relative mx-auto max-w-7xl px-6 lg:px-12">
         <Reveal>
           <div className="mx-auto max-w-2xl text-center">
-            <Eyebrow className="justify-center text-violet-soft">Platform Strength</Eyebrow>
+            <span className="inline-flex items-center gap-2.5 font-mono text-[12px] font-medium uppercase tracking-[1.5px] text-violet-soft">
+              <span className="h-px w-6 bg-violet-soft/60" />
+              Platform Strength
+            </span>
             <h2 className="mt-4 text-[clamp(32px,4.4vw,52px)] font-bold leading-[1.06] tracking-[-1.5px] text-white">
               Built for the high-scale demands of{' '}
               <span className="bg-gradient-to-br from-[#E2D7FF] to-[#7C5CE8] bg-clip-text font-serif italic text-transparent">
@@ -60,62 +56,76 @@ export default function Infrastructure() {
               </span>
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-[17px] leading-relaxed text-white/55">
-              Every architectural decision measured against one benchmark: can it
-              serve a major bank's entire customer base, at full load, without
-              compromise?
+              Every architectural decision measured against one benchmark: serve a
+              major bank's entire customer base, at full load, without compromise.
             </p>
           </div>
         </Reveal>
 
-        {/* Metrics band */}
+        {/* Bento mosaic */}
         <Reveal delay={0.05}>
-          <div className="mt-14 grid grid-cols-2 overflow-hidden rounded-[18px] border border-white/[0.08] bg-white/[0.03] md:grid-cols-3 lg:grid-cols-6">
-            {METRICS.map((m, i) => (
-              <div
-                key={m.label}
-                className="border-b border-r border-white/[0.06] px-5 py-7 transition-colors duration-300 last:border-r-0 hover:bg-violet-core/[0.08]"
-              >
-                <b className="block text-[34px] font-bold leading-none tracking-[-1.5px] text-white">
-                  {m.prefix && <span>{m.prefix}</span>}
-                  <CountUp end={m.end} />
-                  <em className="not-italic text-[15px] text-violet-soft">{m.suffix}</em>
-                </b>
-                <span className="mt-3 block font-mono text-[10px] leading-snug text-white/45">
-                  {m.label}
-                </span>
-              </div>
-            ))}
-          </div>
-        </Reveal>
-
-        {/* Spec cards */}
-        <div className="mt-5 grid gap-5 md:grid-cols-2">
-          {SPECS.map((s, i) => (
-            <Reveal key={s.no} delay={(i % 2) * 0.08}>
-              <div className="flex h-full gap-5 rounded-[18px] border border-white/[0.08] bg-white/[0.03] p-7 transition-colors duration-300 hover:border-violet-bright/30">
-                <div className="pt-0.5 font-mono text-[12px] text-violet-soft">{s.no}</div>
-                <div>
-                  <h4 className="mb-2 text-[18px] font-bold tracking-[-0.3px] text-white">
-                    {s.title}
-                  </h4>
-                  <p className="mb-3.5 text-[14px] leading-relaxed text-white/60">
-                    {s.body}
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {s.pills.map((p) => (
-                      <span
-                        key={p}
-                        className="rounded-full border border-white/10 px-2.5 py-1 font-mono text-[10.5px] text-white/60"
-                      >
-                        {p}
-                      </span>
-                    ))}
-                  </div>
+          <div className="mt-14 grid auto-rows-[minmax(150px,auto)] grid-cols-2 gap-3 lg:grid-cols-6">
+            {/* Hero metric with mini chart */}
+            <div className={`relative col-span-2 row-span-2 flex flex-col justify-between overflow-hidden p-7 ${tileDark}`}>
+              <div className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-violet-core/20 blur-3xl" />
+              <div className="relative">
+                <div className="font-mono text-[10.5px] uppercase tracking-[0.5px] text-white/45">
+                  Cards live in production
+                </div>
+                <div className="mt-3 text-[64px] font-bold leading-none tracking-[-3px] text-white">
+                  <CountUp end={25} />
+                  <span className="text-[26px] text-violet-soft">M+</span>
                 </div>
               </div>
-            </Reveal>
-          ))}
-        </div>
+              {/* mini bar chart */}
+              <div className="relative mt-6 flex items-end gap-1.5" aria-hidden="true">
+                {[28, 36, 30, 48, 44, 60, 56, 72, 68, 88, 82, 100].map((h, i) => (
+                  <div
+                    key={i}
+                    className="flex-1 rounded-t bg-gradient-to-t from-violet-core/30 to-violet-soft/80"
+                    style={{ height: `${h}%` }}
+                  />
+                ))}
+              </div>
+            </div>
+
+            <Spec
+              className="col-span-2"
+              no="A1"
+              title="Cloud-native architecture"
+              body="Built cloud-native from the ground up. Elastic scale, zero scheduled downtime, continuous delivery on AWS, Azure, or GCP."
+              pills={['AWS', 'Azure', 'GCP']}
+            />
+            <Spec
+              className="col-span-2"
+              no="A2"
+              title="Zero-trust security"
+              body="Continuous verification, encryption at rest and in transit, segmentation. 800M+ MFA authentications, no reported breach."
+              pills={['PCI-DSS L1', 'ISO 27001', 'FIDO2']}
+            />
+
+            <Metric className="col-span-1" end={1} suffix="M+" label="Transactions / sec, peak" />
+            <Metric className="col-span-1" end={100} prefix="<" suffix="ms" label="Response, every action" />
+            <Metric className="col-span-1" end={60} suffix="M+" label="Contracted accounts" />
+            <Metric className="col-span-1" end={800} suffix="M+" label="MFA authentications" />
+
+            <Metric className="col-span-2" end={10} suffix="yr" label="In production at scale" />
+            <Spec
+              className="col-span-2"
+              no="A3"
+              title="Adopt on your terms"
+              body="15+ independently deployable modules. Add card management, run the UPI switch in parallel, expand into lending when ready."
+              pills={['Modular', 'API-first', '15+ components']}
+            />
+            <Spec
+              className="col-span-2"
+              no="A4"
+              title="Certified across networks"
+              body="Certified with NPCI, Mastercard, Visa, and RuPay. Proven in regulated markets across India, the US, and Southeast Asia."
+              pills={['NPCI', 'Mastercard', 'Visa', 'RuPay']}
+            />
+          </div>
+        </Reveal>
       </div>
     </section>
   )
