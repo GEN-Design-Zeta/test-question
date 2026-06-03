@@ -38,6 +38,22 @@ export function SectionHead({ eyebrow, title, accent, sub, center = false }) {
   )
 }
 
-/* Light glass card — white surface with a soft lavender shadow. */
+/* Light card — soft white-to-lavender surface with a gentle lift on hover. */
 export const lightCard =
-  'rounded-[18px] border border-violet-core/[0.13] bg-white shadow-[0_2px_8px_rgba(70,40,180,0.05),0_8px_28px_rgba(70,40,180,0.05)] transition-all duration-300 hover:-translate-y-1.5 hover:border-violet-bright/40 hover:shadow-[0_6px_18px_rgba(70,40,180,0.1),0_28px_56px_rgba(70,40,180,0.09)]'
+  'rounded-[22px] border border-white bg-gradient-to-b from-white to-[#FBF9FF] shadow-[0_1px_2px_rgba(80,50,180,0.04),0_14px_44px_-14px_rgba(80,50,180,0.13)] ring-1 ring-violet-core/[0.06] transition-all duration-300 hover:-translate-y-1.5 hover:ring-violet-bright/25 hover:shadow-[0_22px_56px_-14px_rgba(80,50,180,0.22)]'
+
+/* Decorative soft radial bloom for adding depth to light sections. */
+export function Bloom({ className = '', color = 'rgba(138,107,240,0.12)', size = 520 }) {
+  return (
+    <div
+      aria-hidden="true"
+      className={`pointer-events-none absolute rounded-full ${className}`}
+      style={{
+        width: size,
+        height: size,
+        background: `radial-gradient(circle, ${color}, transparent 70%)`,
+        filter: 'blur(60px)',
+      }}
+    />
+  )
+}

@@ -12,7 +12,7 @@ export default function CaseStudy() {
   return (
     <section
       id="proof"
-      className="relative overflow-hidden border-t border-violet-core/10 bg-[#F8F7FD] py-28"
+      className="relative overflow-hidden bg-gradient-to-b from-[#ECE5F8] to-[#F5F0FD] py-28"
     >
       {/* soft lavender bloom */}
       <div className="pointer-events-none absolute left-[-10%] top-[10%] h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle,rgba(138,107,240,0.12),transparent_65%)] blur-[80px]" />

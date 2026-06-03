@@ -1,6 +1,6 @@
 import { ArrowRight } from 'lucide-react'
 import Reveal from '../Reveal.jsx'
-import { SectionHead, lightCard } from './_shared.jsx'
+import { SectionHead, lightCard, Bloom } from './_shared.jsx'
 
 const POSTS = [
   {
@@ -25,8 +25,17 @@ const POSTS = [
 
 export default function Insights() {
   return (
-    <section id="insights" className="bg-[#F8F7FD] py-28">
-      <div className="mx-auto max-w-7xl px-6 lg:px-12">
+    <section
+      id="insights"
+      className="relative overflow-hidden bg-gradient-to-b from-[#F4EEFC] to-[#FBF9FF] py-28"
+    >
+      {/* fade in from the dark infrastructure band */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-[#0B0A12] to-transparent"
+      />
+      <Bloom className="-right-28 top-16" color="rgba(200,184,245,0.16)" size={520} />
+      <div className="relative mx-auto max-w-7xl px-6 lg:px-12">
         <Reveal>
           <SectionHead eyebrow="Resources" title="What we're" accent="thinking about." />
         </Reveal>

@@ -1,7 +1,7 @@
 import { Zap, Users, CheckCircle2 } from 'lucide-react'
 import Reveal from '../Reveal.jsx'
 import CountUp from '../CountUp.jsx'
-import { SectionHead, lightCard } from './_shared.jsx'
+import { SectionHead, lightCard, Bloom } from './_shared.jsx'
 
 const CARDS = [
   {
@@ -29,8 +29,13 @@ const CARDS = [
 
 export default function Approach() {
   return (
-    <section id="approach" className="bg-[#F8F7FD] py-28">
-      <div className="mx-auto max-w-7xl px-6 lg:px-12">
+    <section
+      id="approach"
+      className="relative overflow-hidden bg-gradient-to-b from-[#FAF7FF] to-[#F3EDFB] py-28"
+    >
+      <Bloom className="-right-32 top-10" color="rgba(138,107,240,0.10)" size={560} />
+      <Bloom className="-left-24 bottom-0" color="rgba(200,184,245,0.14)" size={460} />
+      <div className="relative mx-auto max-w-7xl px-6 lg:px-12">
         <Reveal>
           <SectionHead
             eyebrow="Our Approach"

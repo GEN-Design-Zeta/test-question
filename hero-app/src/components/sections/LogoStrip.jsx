@@ -4,8 +4,13 @@ const LOGOS = ['HDFC Bank', 'PayZapp', 'Mastercard', 'Visa', 'RuPay', 'NPCI']
 
 export default function LogoStrip() {
   return (
-    <section className="border-y border-violet-core/10 bg-[#F8F7FD] py-12">
-      <div className="mx-auto max-w-7xl px-6 lg:px-12">
+    <section className="relative overflow-hidden bg-gradient-to-b from-[#F4EFFC] to-[#FAF7FF] py-14">
+      {/* smooth fade from the dark hero into the light region */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#0B0A14] to-transparent"
+      />
+      <div className="relative mx-auto max-w-7xl px-6 lg:px-12">
         <Reveal>
           <p className="text-center font-mono text-[11.5px] uppercase tracking-[1.5px] text-slate-400">
             Powering banking for the institutions people trust

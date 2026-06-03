@@ -42,9 +42,14 @@ export default function Infrastructure() {
   return (
     <section
       id="infrastructure"
-      className="border-t border-white/[0.06] bg-[#0B0A12] py-28"
+      className="relative overflow-hidden bg-[#0B0A12] py-28"
     >
-      <div className="mx-auto max-w-7xl px-6 lg:px-12">
+      {/* fade in from the preceding light section */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-[#F5F0FD] to-transparent"
+      />
+      <div className="relative mx-auto max-w-7xl px-6 lg:px-12">
         <Reveal>
           <div className="mx-auto max-w-2xl text-center">
             <Eyebrow className="justify-center text-violet-soft">Platform Strength</Eyebrow>

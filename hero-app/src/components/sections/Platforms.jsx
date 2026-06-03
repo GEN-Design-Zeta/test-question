@@ -1,6 +1,6 @@
 import { Zap, ShieldCheck, Radio, ArrowRight } from 'lucide-react'
 import Reveal from '../Reveal.jsx'
-import { SectionHead, lightCard } from './_shared.jsx'
+import { SectionHead, lightCard, Bloom } from './_shared.jsx'
 
 const PLATFORMS = [
   {
@@ -43,8 +43,12 @@ const PLATFORMS = [
 
 export default function Platforms() {
   return (
-    <section id="platforms" className="border-t border-violet-core/10 bg-[#F0EEF9] py-28">
-      <div className="mx-auto max-w-7xl px-6 lg:px-12">
+    <section
+      id="platforms"
+      className="relative overflow-hidden bg-gradient-to-b from-[#F3EDFB] to-[#ECE5F8] py-28"
+    >
+      <Bloom className="left-1/2 top-0 -translate-x-1/2" color="rgba(138,107,240,0.12)" size={680} />
+      <div className="relative mx-auto max-w-7xl px-6 lg:px-12">
         <Reveal>
           <SectionHead
             center

@@ -3,8 +3,13 @@ import Reveal from '../Reveal.jsx'
 
 export default function CTASection() {
   return (
-    <section id="contact" className="bg-[#070612] py-28">
-      <div className="mx-auto max-w-7xl px-6 lg:px-12">
+    <section id="contact" className="relative overflow-hidden bg-[#070612] py-28">
+      {/* fade in from the light insights section */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-[#FBF9FF] to-transparent"
+      />
+      <div className="relative mx-auto max-w-7xl px-6 lg:px-12">
         <Reveal>
           <div className="relative overflow-hidden rounded-[28px] border border-white/[0.12] bg-[linear-gradient(180deg,rgba(138,107,240,0.16),rgba(255,255,255,0.02))] px-6 py-20 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.07)] md:px-12">
             <div className="pointer-events-none absolute left-1/2 top-[-40%] h-[500px] w-[700px] -translate-x-1/2 bg-[radial-gradient(ellipse,rgba(138,107,240,0.4),transparent_65%)] blur-[70px]" />
