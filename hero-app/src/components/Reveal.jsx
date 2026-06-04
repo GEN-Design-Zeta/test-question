@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 
 /**
  * Reveal — scroll-triggered entrance. Fades + lifts its children when

@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 
 /**
  * BlurIn — fades + un-blurs + lifts its children into place.

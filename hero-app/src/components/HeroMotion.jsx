@@ -1,4 +1,4 @@
-import { motion, useReducedMotion } from 'framer-motion'
+import { motion, useReducedMotion } from 'motion/react'
 
 /**
  * HeroMotion — the premium purple energy that orbits the hero copy.

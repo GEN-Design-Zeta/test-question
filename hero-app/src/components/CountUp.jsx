@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { useInView } from 'framer-motion'
+import { useInView } from 'motion/react'
 
 /**
  * CountUp — animates a number from 0 to `end` when scrolled into view.

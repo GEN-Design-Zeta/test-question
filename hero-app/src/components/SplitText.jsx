@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 
 const wordVariants = {
   hidden: { opacity: 0, y: 40, filter: 'blur(8px)' },
