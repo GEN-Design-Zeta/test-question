@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800&family=DM+Serif+Display:ital@0;1&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html,
+  body,
+  * {
+    font-family: 'DM Sans', -apple-system, sans-serif;
+  }
+
+  body {
+    margin: 0;
+    color: #1a1625;
+    background: #ffffff;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .font-serif {
+    font-family: 'DM Serif Display', serif;
+  }
+}
+
+/* ---------------------------------------------------------------- */
+/* Brand Tokens — CSS Variables                                     */
+/* ---------------------------------------------------------------- */
+:root {
+  --navy: #1a1625; /* primary text */
+  --navy-dark: #0f0b1e; /* dark sections */
+  --purple: #5b2fd4; /* accent / CTA */
+  --purple-mid: #7b52e0; /* hover states */
+  --purple-lt: #ede8fb; /* light tint */
+  --purple-ft: #f5f2fe; /* faint bg */
+  --teal: #0ea47a; /* Cipher accent */
+  --gold: #c49a10; /* Neutrino / awards */
+  --coral: #e85d3a; /* problem / highlights */
+  --gray-700: #3d3557;
+  --gray-500: #6b6484; /* body copy */
+  --gray-200: #c8c4d8;
+  --gray-100: #edeaf5; /* borders */
+  --gray-50: #f8f7fc; /* section bg */
+}
+
+/* ---------------------------------------------------------------- */
+/* Entrance animations                                              */
+/* ---------------------------------------------------------------- */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Hero background blobs */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-20px) scale(1.03);
+  }
+}
+@keyframes floatSlow {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(3deg);
+  }
+}
+
+/* ---------------------------------------------------------------- */
+/* Scroll-reveal base state                                         */
+/* ---------------------------------------------------------------- */
+.rv,
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.rv.on,
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.rv.d1 {
+  transition-delay: 0.1s;
+}
+.rv.d2 {
+  transition-delay: 0.22s;
+}
+.rv.d3 {
+  transition-delay: 0.34s;
+}
+.rv.d4 {
+  transition-delay: 0.46s;
+}
+.rv.d5 {
+  transition-delay: 0.58s;
+}
+
+/* Alternate timing for .reveal */
+.reveal.rv1 {
+  transition-delay: 0.08s;
+}
+.reveal.rv2 {
+  transition-delay: 0.2s;
+}
+.reveal.rv3 {
+  transition-delay: 0.32s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .rv,
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
