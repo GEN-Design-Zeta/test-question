@@ -1,0 +1,19 @@
+{
+  "name": "zeta-grand-prix",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Zeta Grand Prix: a single-file 3D Formula 1 game across five floating-island circuits.",
+  "scripts": {
+    "start": "npx serve .",
+    "test": "npm run test:circuits && npm run test:hud && npm run test:tour",
+    "test:hud": "node tests/hud-overlap.js",
+    "test:circuits": "node tests/circuits.js",
+    "test:tour": "node tests/tour.js",
+    "tracks": "node tools/tracks/fit2.js",
+    "tracks:viz": "cd tools/tracks && LF=./layouts.js node viz.js"
+  },
+  "devDependencies": {
+    "playwright": "^1.47.0",
+    "three": "0.128.0"
+  }
+}
