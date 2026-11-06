@@ -13,7 +13,7 @@ A single-file 3D Formula 1 game (`index.html`, ~2,900 lines, three.js r128 from 
 |---|---|
 | Palette + brand colours (`PAL`, extra keys `zp*`, `sd*`, `aq*`, `gl*`) | `// ===== 01 palette` |
 | Render pipeline. Realistic and Raw 3D = sky pass + antialiased direct render (Raw at full device resolution). Pixel art = low-res target, outlines, OKLab palette snap | `// ===== 02 render pipeline`, `renderFrame`, `POST_FRAG` (`uSnap`, `uSkyOnly`) |
-| Default settings: Realistic, Raw 3D on, 1 px, Dither on, Outlines off, Sound on, Lift near stands off. Switching the look leaves the Outlines and Dither boxes as the viewer set them | `const VIEW`, `const UI`, the checkboxes in the settings panel (synced from these at start-up in `initUI`) |
+| Default settings: Realistic, Raw 3D on, 1 px, Dither on, Outlines off, Sound off, Lift near stands off. Switching the look leaves the Outlines and Dither boxes as the viewer set them | `const VIEW`, `const UI`, the checkboxes in the settings panel (synced from these at start-up in `initUI`) |
 | Day / dusk / night lighting | `const LIGHTS` |
 | Circuits (control points, island scale, preferred venue spots, default light) | `const CIRCUITS`, `CIRCUIT_ORDER` |
 | Scenery themes (ground, strata, trees, water colours) | `const THEMES` |
@@ -31,7 +31,7 @@ A single-file 3D Formula 1 game (`index.html`, ~2,900 lines, three.js r128 from 
 | Race sim, AI, pits, sectors/ERS telemetry | `stepRace`, `stepAI`, `stepPlayer`, `carTelemetry`, `lapDone` |
 | Traffic: lane-relative car extents, following, passing, the overlap safety net | `const CAR`, `relTo`, `laneClear`, `resolveCars` |
 | The pit road's shape (it forks off the track edge as a taper; the exit mirrors it). The mesh, the grip model and the AI's line all use it | `pitEdges`, `pitMid`, `PITJ` |
-| Audio, all synthesised: V6 for the watched car (eight gears, crackle, turbo), Doppler fly-bys, crowd. Starts on the first click or key press | `stepAudio`, `carRev`, `buildAudio`, `sfx` |
+| Audio, all synthesised and off by default: V6 for the watched car (two detuned pulse trains with flutter, pulsed exhaust rasp, rumble; eight gears, crackle), darker Doppler fly-bys, crowd. Keep its spectral centroid low (~700 Hz at race revs): a bright, thin engine note reads as a mosquito | `stepAudio`, `carRev`, `buildAudio`, `sfx` |
 | Broadcast cards | `refreshTower`, `refreshSpeedo`, `buildMap` / `refreshMap`, `showLtd`, `caption` (race control), `refreshTable` |
 | Auto race director + world tour | `DIR`, `stepDirector`, `setAutoRace`, `autoNext` |
 | Controls / keys | `initUI` |
